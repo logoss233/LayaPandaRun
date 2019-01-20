@@ -15,10 +15,12 @@ var Floor = /** @class */ (function (_super) {
     __extends(Floor, _super);
     function Floor() {
         var _this = _super.call(this) || this;
+        _this.itemType = "floor";
+        _this.poolTag = "Floor";
         //贴图
         if (Floor.firstRun) {
             Floor.firstRun = false;
-            for (var i = 1; i <= 6; i++) {
+            for (var i = 1; i <= 8; i++) {
                 var path = "item/" + i + ".png";
                 var tex = Laya.loader.getRes(path);
                 Floor.textureList.push(tex);
@@ -40,5 +42,5 @@ var Floor = /** @class */ (function (_super) {
     Floor.textureList = [];
     Floor.firstRun = true; //第一次运行
     return Floor;
-}(Sprite));
+}(Item));
 //# sourceMappingURL=Floor.js.map

@@ -12,9 +12,9 @@ class ItemManager{
         this.itemPlace=game.itemPlace
     }
 
-    append(item,type:string){
+    append(item:Item){
         this.itemList.push(item)
-        var list=this._getTypeList(type)
+        var list=this._getTypeList(item.itemType)
         if (list==null){
             console.log("添加物品，类型不合法")
             return
@@ -22,14 +22,14 @@ class ItemManager{
         list.push(item)
         this.itemPlace.addChild(item)
     }
-    remove(item,type:string){
+    remove(item:Item){
         var index=this.itemList.indexOf(item)
         if(index==-1){
             console.log("删除物品，没有找到")
             return
         }
         this.itemList.splice(index,1)
-        var list=this._getTypeList(type)
+        var list=this._getTypeList(item.itemType)
         if (list==null){
             console.log("删除物品，类型不合法")
             return

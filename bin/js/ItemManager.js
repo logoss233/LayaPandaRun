@@ -10,9 +10,9 @@ var ItemManager = /** @class */ (function () {
         this.game = game;
         this.itemPlace = game.itemPlace;
     };
-    ItemManager.prototype.append = function (item, type) {
+    ItemManager.prototype.append = function (item) {
         this.itemList.push(item);
-        var list = this._getTypeList(type);
+        var list = this._getTypeList(item.itemType);
         if (list == null) {
             console.log("添加物品，类型不合法");
             return;
@@ -20,14 +20,14 @@ var ItemManager = /** @class */ (function () {
         list.push(item);
         this.itemPlace.addChild(item);
     };
-    ItemManager.prototype.remove = function (item, type) {
+    ItemManager.prototype.remove = function (item) {
         var index = this.itemList.indexOf(item);
         if (index == -1) {
             console.log("删除物品，没有找到");
             return;
         }
         this.itemList.splice(index, 1);
-        var list = this._getTypeList(type);
+        var list = this._getTypeList(item.itemType);
         if (list == null) {
             console.log("删除物品，类型不合法");
             return;

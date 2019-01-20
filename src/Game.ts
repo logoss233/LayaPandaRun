@@ -47,13 +47,14 @@ class Game extends Sprite{
 
 
         //test
-        for(let i=1;i<=6;i++){
+        for(let i=1;i<=8;i++){
             var fl=new Floor()
             fl.start(i)
             fl.pos(i*64,400)
-            this.itemManager.append(fl,"floor")
+            this.itemManager.append(fl)
         }
-        
+        var magnent=Pool.getItemByClass("Magnent",Magnent)
+        this.itemManager.append(magnent)
 
 
     }

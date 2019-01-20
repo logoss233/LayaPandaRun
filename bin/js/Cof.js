@@ -8,6 +8,7 @@ var Tween = Laya.Tween;
 var Rectangle = Laya.Rectangle;
 var Texture = Laya.Texture;
 var Animation = Laya.Animation;
+var Pool = Laya.Pool;
 /**
  * 配置  静态类
  */

@@ -8,6 +8,7 @@ import Tween=Laya.Tween
 import Rectangle=Laya.Rectangle
 import Texture=Laya.Texture
 import Animation=Laya.Animation
+import Pool=Laya.Pool
 
 /**
  * 配置  静态类

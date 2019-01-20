@@ -37,12 +37,14 @@ var Game = /** @class */ (function (_super) {
         _this.cam.start(_this.camLayer, _this.player, _this);
         Laya.timer.frameLoop(1, _this, _this.update);
         //test
-        for (var i = 1; i <= 6; i++) {
+        for (var i = 1; i <= 8; i++) {
             var fl = new Floor();
             fl.start(i);
             fl.pos(i * 64, 400);
-            _this.itemManager.append(fl, "floor");
+            _this.itemManager.append(fl);
         }
+        var magnent = Pool.getItemByClass("Magnent", Magnent);
+        _this.itemManager.append(magnent);
         return _this;
     }
     Game.prototype.start = function () {

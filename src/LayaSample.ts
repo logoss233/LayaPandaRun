@@ -24,7 +24,8 @@ class GameMain{
             "PlayerAnimation.ani",
             "CoinAnimation.ani",
             "ShieldAnimation.ani",
-            "MagnentAnimation.ani"
+            "MagnentAnimation.ani",
+            "EatEffectAnimation.ani"
         ]
 
         Laya.loader.load(assets,Laya.Handler.create(this,this.onLoadComplete))
