@@ -52,7 +52,7 @@ var Cam = /** @class */ (function () {
     Cam.prototype.update = function () {
         if (this.player.x + this.playerOffX > this.camX) {
             this.camX = this.player.x + this.playerOffX;
-            this.distance = this.camX;
+            this.distance = Math.floor(this.camX / 10);
         }
     };
     return Cam;

@@ -21,6 +21,8 @@ var Game = /** @class */ (function (_super) {
         _this.floorRight = 0; //地板最右的位置
         _this.last_mapData = null; //防止重复场景用
         _this.levelChangeDistance = 1000;
+        //------------状态
+        _this._state = "";
         $game = _this;
         _this.camLayer = new Sprite();
         _this.addChild(_this.camLayer);
@@ -34,7 +36,7 @@ var Game = /** @class */ (function (_super) {
         _this.itemManager.start(_this);
         _this.player = new Player();
         _this.camLayer.addChild(_this.player);
-        _this.player.pos(200, 300);
+        _this.player.pos(350, 300);
         _this.player.start(_this);
         _this.cam = new Cam();
         _this.cam.start(_this.camLayer, _this.player, _this);
@@ -45,12 +47,30 @@ var Game = /** @class */ (function (_super) {
         _this.player.isRun = true;
         return _this;
     }
+    Object.defineProperty(Game.prototype, "state", {
+        get: function () {
+            return this._state;
+        },
+        set: function (value) {
+            this._state = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Game.prototype.start = function () {
     };
     Game.prototype.update = function () {
         this.player.update();
         this.cam.update();
         this.bg.update(this.cam.camX);
+        this.itemManager.update(this.cam.camX);
+        //自动创建地图
+        var camRight = this.cam.camX + Cof.DesinWidth;
+        if (camRight > this.floorRight - 100) {
+            var level = Math.floor(this.distance / this.levelChangeDistance) + 1;
+            var lv = this.chooseLv(level);
+            this.createFloor(lv);
+        }
     };
     //---------功能
     Game.prototype.createFloor = function (lv) {

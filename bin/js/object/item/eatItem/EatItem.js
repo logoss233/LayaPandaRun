@@ -20,6 +20,8 @@ var EatItem = /** @class */ (function (_super) {
     }
     EatItem.prototype.eat = function () {
     };
+    EatItem.prototype.update = function () {
+    };
     return EatItem;
 }(Item));
 //# sourceMappingURL=EatItem.js.map

@@ -2,7 +2,7 @@ class BG extends Sprite{
     spr1:Sprite
     spr2:Sprite
     
-    sprWidth=1300
+    sprWidth=Cof.DesinWidth
     constructor(){
         super()
         this.spr1=new Sprite()

@@ -76,8 +76,10 @@ class Player extends Sprite{
         //进入事件
         switch(this.state){
             case "normal":
+                this.setBounds(new Rectangle(-28,-58,56,116))
             break;
             case "slide":
+                this.setBounds(new Rectangle(-28,4,56,56))
                 this.slide_timer=this.slide_time
                 this.playAni("slide")
                 this.ani.y=-64+13 //13是下滑时贴图向下偏移值
@@ -86,7 +88,10 @@ class Player extends Sprite{
                 if(this.isMagnent){
                     this.isMagnent=false
                 }
-                
+                this.vspeed=-8
+                this.playAni("jumpDown")
+                this.isRun=false
+                this.rotation=-45
             break;
         }
     }
@@ -161,7 +166,7 @@ class Player extends Sprite{
                 }
             break;
             case "die":
-                this.hspeed=-300
+                this.hspeed=-3
             break;
         }
         //物理
@@ -172,24 +177,13 @@ class Player extends Sprite{
         if (this.vspeed>10){
             this.vspeed=10
         }
-           //和地面碰撞
-        this.isFloor=false
-        var rec=new Rectangle()
-        rec.x=this.x-32
-        rec.width=64
-        rec.y=this.y+this.vspeed+64-2-4  //2是rec宽度  4脚的位置和贴图底部的偏移
-        rec.height=2
-        for (let i=0;i<this.itemManager.floorList.length;i++){
-            var fl=this.itemManager.floorList[i] as Floor
-            if(fl.getBounds().intersection(rec)){
-                //碰到了
-                this.isFloor=true
-                this.vspeed=0
-                this.y=fl.getBounds().y-64+4  //4脚的位置和贴图底部的偏移
-                break
-            }
+        //碰撞
+        if (this.state!="die"){
+            this.collision()
         }
         this.y+=this.vspeed
+
+
         //动画
         var nextAnima=""
         if(this.state=="normal"){
@@ -225,6 +219,54 @@ class Player extends Sprite{
         }
     }
     
+    collision(){
+           //和地面碰撞
+        this.isFloor=false
+
+        if(this.vspeed>=0){
+            var rec=new Rectangle()
+            rec.x=this.x-32
+            rec.width=64
+            rec.y=this.y+this.vspeed+64-2-4  //2是rec宽度  4脚的位置和贴图底部的偏移
+            rec.height=2
+            for (let i=0;i<this.itemManager.floorList.length;i++){
+                var fl=this.itemManager.floorList[i] as Floor
+                if(fl.getBounds().intersection(rec)){
+                    //碰到了
+                    this.isFloor=true
+                    this.vspeed=0
+                    this.y=fl.getBounds().y-64+4  //4脚的位置和贴图底部的偏移
+                    break
+                }
+            }
+        }
+        
+        
+        //和吃的东西的碰撞
+        rec=this.getBounds() //接下来用碰撞框来检测
+
+        for(let i=0;i<this.itemManager.eatItemList.length;i++){
+            let item=this.itemManager.eatItemList[i] as EatItem
+            if(item.getBounds().intersection(rec)){
+                //吃到了
+                item.eat()
+            }
+        }
+        //和敌人的碰撞
+        if(!this.isShield){
+            for(let i=0;i<this.itemManager.enemyList.length;i++){
+                let item=this.itemManager.enemyList[i] as Enemy
+                if(item.getBounds().intersection(rec)){
+                    //碰到了
+                    this.state="die"
+                }
+            }
+        }
+        
+        
+    }
+
+
 //--------------功能---------
     playAni(anima:string){
         this.currentAnimation=anima

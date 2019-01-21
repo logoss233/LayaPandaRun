@@ -1,6 +1,8 @@
 var $game:Game
     
 class Game extends Sprite{
+    
+    
     distance=0
     
     floorRight=0 //地板最右的位置
@@ -22,8 +24,15 @@ class Game extends Sprite{
     
     tileParser:TileParser
     
+    //------------状态
+    private _state=""
+    get state(){
+        return this._state
+    }
+    set state(value){
+        this._state=value
 
-
+    }
 
 
     //----------初始化---------
@@ -43,7 +52,7 @@ class Game extends Sprite{
 
         this.player=new Player()
         this.camLayer.addChild(this.player)
-        this.player.pos(200,300)
+        this.player.pos(350,300)
         this.player.start(this)
 
         this.cam=new Cam()
@@ -70,6 +79,14 @@ class Game extends Sprite{
         this.cam.update()
         this.bg.update(this.cam.camX)
         this.itemManager.update(this.cam.camX)
+
+        //自动创建地图
+        var camRight=this.cam.camX+Cof.DesinWidth
+        if(camRight>this.floorRight-100){
+            var level=Math.floor(this.distance/this.levelChangeDistance)+1
+            var lv=this.chooseLv(level)
+            this.createFloor(lv)
+        }
     }
 
     //---------功能

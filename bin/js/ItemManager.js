@@ -57,6 +57,19 @@ var ItemManager = /** @class */ (function () {
         }
         return list;
     };
+    ItemManager.prototype.update = function (camX) {
+        //移除检测
+        var tmpList = this.itemList.concat();
+        for (var i = 0; i < tmpList.length; i++) {
+            var item = tmpList[i];
+            item.removeCheck(camX);
+        }
+        //更新物品
+        for (var i = 0; i < this.eatItemList.length; i++) {
+            var item = this.eatItemList[i];
+            item.update();
+        }
+    };
     return ItemManager;
 }());
 //# sourceMappingURL=ItemManager.js.map

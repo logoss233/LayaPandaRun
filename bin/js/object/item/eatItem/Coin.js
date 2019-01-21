@@ -37,6 +37,20 @@ var Coin = /** @class */ (function (_super) {
         //删除自己
         this.delete();
     };
+    Coin.prototype.update = function () {
+        var player = $game.player;
+        if (player.isMagnent) {
+            var dx = player.x - this.x;
+            var dy = player.y - this.y;
+            var adx = Math.abs(dx);
+            var ady = Math.abs(dy);
+            var distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance <= this.magnent_distance) {
+                this.x += dx / (adx + ady) * this.speed;
+                this.y += dy / (adx + ady) * this.speed;
+            }
+        }
+    };
     return Coin;
 }(EatItem));
 //# sourceMappingURL=Coin.js.map

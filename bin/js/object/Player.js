@@ -117,8 +117,10 @@ var Player = /** @class */ (function (_super) {
             //进入事件
             switch (this.state) {
                 case "normal":
+                    this.setBounds(new Rectangle(-28, -58, 56, 116));
                     break;
                 case "slide":
+                    this.setBounds(new Rectangle(-28, 4, 56, 56));
                     this.slide_timer = this.slide_time;
                     this.playAni("slide");
                     this.ani.y = -64 + 13; //13是下滑时贴图向下偏移值
@@ -127,6 +129,10 @@ var Player = /** @class */ (function (_super) {
                     if (this.isMagnent) {
                         this.isMagnent = false;
                     }
+                    this.vspeed = -8;
+                    this.playAni("jumpDown");
+                    this.isRun = false;
+                    this.rotation = -45;
                     break;
             }
         },
@@ -168,7 +174,7 @@ var Player = /** @class */ (function (_super) {
                 }
                 break;
             case "die":
-                this.hspeed = -300;
+                this.hspeed = -3;
                 break;
         }
         //物理
@@ -179,22 +185,9 @@ var Player = /** @class */ (function (_super) {
         if (this.vspeed > 10) {
             this.vspeed = 10;
         }
-        //和地面碰撞
-        this.isFloor = false;
-        var rec = new Rectangle();
-        rec.x = this.x - 32;
-        rec.width = 64;
-        rec.y = this.y + this.vspeed + 64 - 2 - 4; //2是rec宽度  4脚的位置和贴图底部的偏移
-        rec.height = 2;
-        for (var i = 0; i < this.itemManager.floorList.length; i++) {
-            var fl = this.itemManager.floorList[i];
-            if (fl.getBounds().intersection(rec)) {
-                //碰到了
-                this.isFloor = true;
-                this.vspeed = 0;
-                this.y = fl.getBounds().y - 64 + 4; //4脚的位置和贴图底部的偏移
-                break;
-            }
+        //碰撞
+        if (this.state != "die") {
+            this.collision();
         }
         this.y += this.vspeed;
         //动画
@@ -226,6 +219,46 @@ var Player = /** @class */ (function (_super) {
             this.lastPressedTimer -= 1 / 60;
             if (this.lastPressedTimer <= 0) {
                 this.lastPressedAction = "";
+            }
+        }
+    };
+    Player.prototype.collision = function () {
+        //和地面碰撞
+        this.isFloor = false;
+        if (this.vspeed >= 0) {
+            var rec = new Rectangle();
+            rec.x = this.x - 32;
+            rec.width = 64;
+            rec.y = this.y + this.vspeed + 64 - 2 - 4; //2是rec宽度  4脚的位置和贴图底部的偏移
+            rec.height = 2;
+            for (var i = 0; i < this.itemManager.floorList.length; i++) {
+                var fl = this.itemManager.floorList[i];
+                if (fl.getBounds().intersection(rec)) {
+                    //碰到了
+                    this.isFloor = true;
+                    this.vspeed = 0;
+                    this.y = fl.getBounds().y - 64 + 4; //4脚的位置和贴图底部的偏移
+                    break;
+                }
+            }
+        }
+        //和吃的东西的碰撞
+        rec = this.getBounds(); //接下来用碰撞框来检测
+        for (var i = 0; i < this.itemManager.eatItemList.length; i++) {
+            var item = this.itemManager.eatItemList[i];
+            if (item.getBounds().intersection(rec)) {
+                //吃到了
+                item.eat();
+            }
+        }
+        //和敌人的碰撞
+        if (!this.isShield) {
+            for (var i = 0; i < this.itemManager.enemyList.length; i++) {
+                var item = this.itemManager.enemyList[i];
+                if (item.getBounds().intersection(rec)) {
+                    //碰到了
+                    this.state = "die";
+                }
             }
         }
     };
