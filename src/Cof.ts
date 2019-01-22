@@ -9,6 +9,7 @@ import Rectangle=Laya.Rectangle
 import Texture=Laya.Texture
 import Animation=Laya.Animation
 import Pool=Laya.Pool
+import SoundManager=Laya.SoundManager
 
 /**
  * 配置  静态类

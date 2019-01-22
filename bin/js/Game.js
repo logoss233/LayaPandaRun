@@ -38,13 +38,17 @@ var Game = /** @class */ (function (_super) {
         _this.camLayer.addChild(_this.player);
         _this.player.pos(350, 300);
         _this.player.start(_this);
+        _this.player.on("die", _this, _this.onDie);
         _this.cam = new Cam();
         _this.cam.start(_this.camLayer, _this.player, _this);
         _this.tileParser = new TileParser();
         _this.tileParser.start(_this.itemPlace);
         _this.createFloor(0);
         Laya.timer.frameLoop(1, _this, _this.update);
-        _this.player.isRun = true;
+        //this.player.isRun=true
+        _this.beginUI = new ui.BeginUIUI();
+        _this.addChild(_this.beginUI);
+        _this.beginUI.startButton.on(Laya.Event.CLICK, _this, _this.onBeginGame);
         return _this;
     }
     Object.defineProperty(Game.prototype, "state", {
@@ -191,6 +195,14 @@ var Game = /** @class */ (function (_super) {
             lv = 4;
         }
         return lv;
+    };
+    Game.prototype.onBeginGame = function () {
+        this.beginUI.visible = false;
+        this.player.isRun = true;
+        $musicManager.begin();
+    };
+    Game.prototype.onDie = function () {
+        $musicManager.end();
     };
     return Game;
 }(Sprite));

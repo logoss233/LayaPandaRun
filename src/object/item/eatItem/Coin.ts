@@ -1,6 +1,7 @@
 class Coin extends EatItem{
     speed=15 //被磁铁吸引的速度
     magnent_distance=800 //吸引的范围
+
     constructor(){
         super()
         this.poolTag="Coin"
@@ -13,7 +14,9 @@ class Coin extends EatItem{
     }
     eat(){
         //播放声音
-
+        var index=Math.floor(Math.random()*3)+1
+        var path="res/sound/coin"+String(index)+".mp3"
+        SoundManager.playSound(path)
         //生成特效
         var effect=Pool.getItemByClass("EatEffect",EatEffect)
         $game.itemPlace.addChild(effect)

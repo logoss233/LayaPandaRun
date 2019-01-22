@@ -9,6 +9,7 @@ var Rectangle = Laya.Rectangle;
 var Texture = Laya.Texture;
 var Animation = Laya.Animation;
 var Pool = Laya.Pool;
+var SoundManager = Laya.SoundManager;
 /**
  * 配置  静态类
  */

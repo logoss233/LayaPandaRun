@@ -15,13 +15,12 @@ var BG = /** @class */ (function (_super) {
     __extends(BG, _super);
     function BG() {
         var _this = _super.call(this) || this;
-        _this.sprWidth = 1300;
-        var tex = Laya.loader.getRes("BG.jpg");
+        _this.sprWidth = Cof.DesinWidth;
         _this.spr1 = new Sprite();
-        _this.spr1.graphics.drawTexture(tex, 0, 0, 1136, 640);
+        _this.spr1.loadImage("BG.jpg");
         _this.addChild(_this.spr1);
         _this.spr2 = new Sprite();
-        _this.spr2.graphics.drawTexture(tex, 0, 0, 1136, 640);
+        _this.spr2.loadImage("BG.jpg");
         _this.addChild(_this.spr2);
         _this.spr2.pos(_this.sprWidth, 0);
         return _this;

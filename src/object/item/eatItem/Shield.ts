@@ -13,6 +13,7 @@ class Shield extends EatItem{
 
     eat(){
         //播放声音
+        SoundManager.playSound("res/sound/item.mp3")
         //生成特效
         var effect=Pool.getItemByClass("EatEffect",EatEffect)
         $game.itemPlace.addChild(effect)

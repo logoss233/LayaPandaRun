@@ -25,6 +25,7 @@ var Magnent = /** @class */ (function (_super) {
     }
     Magnent.prototype.eat = function () {
         //播放声音
+        SoundManager.playSound("res/sound/item.mp3");
         //生成特效
         var effect = Pool.getItemByClass("EatEffect", EatEffect);
         $game.itemPlace.addChild(effect);

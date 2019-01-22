@@ -92,6 +92,7 @@ class Player extends Sprite{
                 this.playAni("jumpDown")
                 this.isRun=false
                 this.rotation=-45
+                this.event("die") //发送死亡事件
             break;
         }
     }
@@ -204,7 +205,26 @@ class Player extends Sprite{
         if(nextAnima!="" && nextAnima!=this.currentAnimation){
             this.playAni(nextAnima)
         }
-        //
+        //掉落死亡
+        if (this.state!="die"){
+            if(this.y>850){
+                this.state="die"
+            }
+        }
+        //更新磁铁计时
+        if(this.isMagnent){
+            this.magnent_timer-=1/60
+            if(this.magnent_timer<=0){
+                this.isMagnent=false
+            }
+        }
+        //更新盾牌计时
+        if(this.isShield){
+            this.shield_timer-=1/60
+            if(this.shield_timer<=0){
+                this.isShield=false
+            }
+        }
 
 
 

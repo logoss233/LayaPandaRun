@@ -1,5 +1,6 @@
 var $game:Game
-    
+
+   
 class Game extends Sprite{
     
     
@@ -23,6 +24,9 @@ class Game extends Sprite{
     itemPlace:Sprite
     
     tileParser:TileParser
+    
+    beginUI:ui.BeginUIUI //开始菜单
+    
     
     //------------状态
     private _state=""
@@ -54,6 +58,7 @@ class Game extends Sprite{
         this.camLayer.addChild(this.player)
         this.player.pos(350,300)
         this.player.start(this)
+        this.player.on("die",this,this.onDie)
 
         this.cam=new Cam()
         this.cam.start(this.camLayer,this.player,this)
@@ -69,7 +74,10 @@ class Game extends Sprite{
 
         Laya.timer.frameLoop(1,this,this.update)
 
-        this.player.isRun=true
+        //this.player.isRun=true
+        this.beginUI=new ui.BeginUIUI()
+        this.addChild(this.beginUI)
+        this.beginUI.startButton.on(Laya.Event.CLICK,this,this.onBeginGame)
     }
     start(){
         
@@ -197,6 +205,13 @@ class Game extends Sprite{
     }
 
 
-    
+    onBeginGame(){
+        this.beginUI.visible=false
+        this.player.isRun=true
+        $musicManager.begin()
+    }
+    onDie(){
+        $musicManager.end()
+    }
 
 }

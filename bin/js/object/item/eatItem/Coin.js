@@ -27,6 +27,9 @@ var Coin = /** @class */ (function (_super) {
     }
     Coin.prototype.eat = function () {
         //播放声音
+        var index = Math.floor(Math.random() * 3) + 1;
+        var path = "res/sound/coin" + String(index) + ".mp3";
+        SoundManager.playSound(path);
         //生成特效
         var effect = Pool.getItemByClass("EatEffect", EatEffect);
         $game.itemPlace.addChild(effect);

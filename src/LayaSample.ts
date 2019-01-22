@@ -20,12 +20,24 @@ class GameMain{
             "res/atlas/panda.atlas",
             "res/atlas/comp.atlas",
             "BG.jpg",
+            "res/atlas/comp.atlas",
 
             "PlayerAnimation.ani",
             "CoinAnimation.ani",
             "ShieldAnimation.ani",
             "MagnentAnimation.ani",
             "EatEffectAnimation.ani",
+
+            "res/sound/coin1.mp3",
+            "res/sound/coin2.mp3",
+            "res/sound/coin3.mp3",
+            "res/sound/item.mp3",
+
+            "res/sound/loopStart.mp3",
+            "res/sound/loop1.mp3",
+            "res/sound/loop2.mp3",
+            "res/sound/loop3.mp3",
+            "res/sound/loopEnd.mp3",
 
 
             "res/map/0-0.json",
@@ -81,7 +93,8 @@ class GameMain{
     onLoadComplete(){
         //把data准备好
         new GameData()
-
+        
+        new MusicManager()
         //开始游戏
         new Main()
     }
