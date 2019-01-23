@@ -1,6 +1,7 @@
 // 程序入口
 var GameMain = /** @class */ (function () {
     function GameMain() {
+        Laya.MiniAdpter.init(true, false);
         Laya.init(Cof.DesinWidth, Cof.DesinHeight, WebGL);
         Laya.stage.alignH = Laya.Stage.ALIGN_LEFT;
         Laya.stage.alignV = Laya.Stage.ALIGN_TOP;
@@ -23,15 +24,6 @@ var GameMain = /** @class */ (function () {
             "ShieldAnimation.ani",
             "MagnentAnimation.ani",
             "EatEffectAnimation.ani",
-            "res/sound/coin1.mp3",
-            "res/sound/coin2.mp3",
-            "res/sound/coin3.mp3",
-            "res/sound/item.mp3",
-            "res/sound/loopStart.mp3",
-            "res/sound/loop1.mp3",
-            "res/sound/loop2.mp3",
-            "res/sound/loop3.mp3",
-            "res/sound/loopEnd.mp3",
             "res/map/0-0.json",
             "res/map/0-1.json",
             "res/map/0-2.json",
@@ -91,4 +83,14 @@ var GameMain = /** @class */ (function () {
     return GameMain;
 }());
 new GameMain();
+//      先注释掉
+//        "res/sound/coin1.mp3",
+//            "res/sound/coin2.mp3",
+//            "res/sound/coin3.mp3",
+//            "res/sound/item.mp3",
+//           "res/sound/loopStart.mp3",
+//           "res/sound/loop1.mp3",
+//           "res/sound/loop2.mp3",
+//           "res/sound/loop3.mp3",
+//           "res/sound/loopEnd.mp3",
 //# sourceMappingURL=LayaSample.js.map
