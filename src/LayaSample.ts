@@ -21,6 +21,7 @@ class GameMain{
             "res/atlas/comp.atlas",
             "BG.jpg",
             "res/atlas/comp.atlas",
+            "res/atlas/ui.atlas",
 
             "PlayerAnimation.ani",
             "CoinAnimation.ani",

@@ -133,8 +133,10 @@ class Player extends Sprite{
         this.itemManager=game.itemManager
         this.state="normal"
 
-        Laya.stage.on(Laya.Event.MOUSE_DOWN,this,this.onMouseDown)
-        Laya.stage.on(Laya.Event.RIGHT_MOUSE_DOWN,this,this.onRightMouseDown)
+        //Laya.stage.on(Laya.Event.MOUSE_DOWN,this,this.onMouseDown)
+        //Laya.stage.on(Laya.Event.RIGHT_MOUSE_DOWN,this,this.onRightMouseDown)
+        $game.gameUI.downButton.on(Laya.Event.MOUSE_DOWN,this,this.onRightMouseDown)
+        $game.gameUI.upButton.on(Laya.Event.MOUSE_DOWN,this,this.onMouseDown)
     }
 
 //---------------------------
@@ -294,10 +296,16 @@ class Player extends Sprite{
     }
 //--------------回调----------
     onMouseDown(){
-        this.setLastPressed("jump")
+        if(this.isRun){
+            this.setLastPressed("jump")
+        }
+        
     }
     onRightMouseDown(){
-        this.setLastPressed("down")
+        if(this.isRun){
+            this.setLastPressed("down")
+        }
+        
     }
 
 

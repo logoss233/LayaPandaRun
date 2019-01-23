@@ -144,8 +144,10 @@ var Player = /** @class */ (function (_super) {
         this.game = game;
         this.itemManager = game.itemManager;
         this.state = "normal";
-        Laya.stage.on(Laya.Event.MOUSE_DOWN, this, this.onMouseDown);
-        Laya.stage.on(Laya.Event.RIGHT_MOUSE_DOWN, this, this.onRightMouseDown);
+        //Laya.stage.on(Laya.Event.MOUSE_DOWN,this,this.onMouseDown)
+        //Laya.stage.on(Laya.Event.RIGHT_MOUSE_DOWN,this,this.onRightMouseDown)
+        $game.gameUI.downButton.on(Laya.Event.MOUSE_DOWN, this, this.onRightMouseDown);
+        $game.gameUI.upButton.on(Laya.Event.MOUSE_DOWN, this, this.onMouseDown);
     };
     //---------------------------
     Player.prototype.update = function () {
@@ -289,10 +291,14 @@ var Player = /** @class */ (function (_super) {
     };
     //--------------回调----------
     Player.prototype.onMouseDown = function () {
-        this.setLastPressed("jump");
+        if (this.isRun) {
+            this.setLastPressed("jump");
+        }
     };
     Player.prototype.onRightMouseDown = function () {
-        this.setLastPressed("down");
+        if (this.isRun) {
+            this.setLastPressed("down");
+        }
     };
     return Player;
 }(Sprite));

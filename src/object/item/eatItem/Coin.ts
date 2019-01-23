@@ -24,7 +24,7 @@ class Coin extends EatItem{
         effect.start()
         //效果
         //加分
-        
+        $game.coin++
         //删除自己
         this.delete()
     }

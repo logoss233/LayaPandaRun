@@ -17,7 +17,12 @@ var Game = /** @class */ (function (_super) {
     //----------初始化---------
     function Game() {
         var _this = _super.call(this) || this;
-        _this.distance = 0;
+        //分数
+        _this._score = 0;
+        //金币
+        _this._coin = 0;
+        //距离
+        _this._distance = 0;
         _this.floorRight = 0; //地板最右的位置
         _this.last_mapData = null; //防止重复场景用
         _this.levelChangeDistance = 1000;
@@ -36,8 +41,7 @@ var Game = /** @class */ (function (_super) {
         _this.itemManager.start(_this);
         _this.player = new Player();
         _this.camLayer.addChild(_this.player);
-        _this.player.pos(350, 300);
-        _this.player.start(_this);
+        _this.player.pos(350, 400);
         _this.player.on("die", _this, _this.onDie);
         _this.cam = new Cam();
         _this.cam.start(_this.camLayer, _this.player, _this);
@@ -49,8 +53,55 @@ var Game = /** @class */ (function (_super) {
         _this.beginUI = new ui.BeginUIUI();
         _this.addChild(_this.beginUI);
         _this.beginUI.startButton.on(Laya.Event.CLICK, _this, _this.onBeginGame);
+        _this.gameUI = new ui.GameUI();
+        _this.addChild(_this.gameUI);
+        _this.gameUI.visible = false;
+        _this.gameOverUI = new ui.GameOverUI();
+        _this.addChild(_this.gameOverUI);
+        _this.gameOverUI.visible = false;
+        _this.gameOverUI.restartButton.on(Laya.Event.CLICK, _this, _this.onRestart);
+        _this.player.start(_this);
         return _this;
     }
+    Object.defineProperty(Game.prototype, "score", {
+        get: function () {
+            return this._score;
+        },
+        set: function (value) {
+            this._score = value;
+            if (this.gameUI != null) {
+                this.gameUI.scoreLabel.text = String(value);
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Game.prototype, "coin", {
+        get: function () {
+            return this._coin;
+        },
+        set: function (value) {
+            this._coin = value;
+            this.updateScore();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Game.prototype, "distance", {
+        get: function () {
+            return this._distance;
+        },
+        set: function (value) {
+            this._distance = value;
+            //this.updateScore()
+        },
+        enumerable: true,
+        configurable: true
+    });
+    //重新计算分数
+    Game.prototype.updateScore = function () {
+        this.score = this.coin * 10;
+    };
     Object.defineProperty(Game.prototype, "state", {
         get: function () {
             return this._state;
@@ -200,9 +251,25 @@ var Game = /** @class */ (function (_super) {
         this.beginUI.visible = false;
         this.player.isRun = true;
         $musicManager.begin();
+        this.gameUI.visible = true;
     };
     Game.prototype.onDie = function () {
         $musicManager.end();
+        //隐藏gameUI
+        this.gameUI.visible = false;
+        //显示gameoverUI
+        this.gameOverUI.visible = true;
+        this.gameOverUI.ani1.play(0, false);
+        this.gameOverUI.scoreLabel.text = String(this.score);
+    };
+    Game.prototype.onRestart = function () {
+        //移除所有物体
+        var list = this.itemManager.itemList;
+        for (var i = 0; i < list.length; i++) {
+            var item = list[i];
+            this.itemManager.remove(item);
+            this.event("restart");
+        }
     };
     return Game;
 }(Sprite));

@@ -2,14 +2,45 @@ var $game:Game
 
    
 class Game extends Sprite{
-    
-    
-    distance=0
-    
+    //分数
+    private _score=0
+    get score(){
+        return this._score
+    }
+    set score(value){
+        this._score=value
+        if(this.gameUI!=null){
+            this.gameUI.scoreLabel.text=String(value)
+        }
+    }
+    //金币
+    private _coin=0
+    get coin(){
+        return this._coin
+    }
+    set coin(value){
+        this._coin=value
+        this.updateScore()
+    }
+    //距离
+    private _distance=0
+    get distance(){
+        return this._distance
+    }
+    set distance(value){
+        this._distance=value
+        //this.updateScore()
+    }
+    //重新计算分数
+    updateScore(){
+        this.score=this.coin*10
+    }
+
+
+
     floorRight=0 //地板最右的位置
     last_mapData=null //防止重复场景用
     levelChangeDistance=1000 
-
 
 
 
@@ -26,8 +57,8 @@ class Game extends Sprite{
     tileParser:TileParser
     
     beginUI:ui.BeginUIUI //开始菜单
-    
-    
+    gameUI:ui.GameUI
+    gameOverUI:ui.GameOverUI
     //------------状态
     private _state=""
     get state(){
@@ -56,8 +87,8 @@ class Game extends Sprite{
 
         this.player=new Player()
         this.camLayer.addChild(this.player)
-        this.player.pos(350,300)
-        this.player.start(this)
+        this.player.pos(350,400)
+        
         this.player.on("die",this,this.onDie)
 
         this.cam=new Cam()
@@ -78,6 +109,18 @@ class Game extends Sprite{
         this.beginUI=new ui.BeginUIUI()
         this.addChild(this.beginUI)
         this.beginUI.startButton.on(Laya.Event.CLICK,this,this.onBeginGame)
+        
+        this.gameUI=new ui.GameUI()
+        this.addChild(this.gameUI)
+        this.gameUI.visible=false
+        
+        this.gameOverUI=new ui.GameOverUI()
+        this.addChild(this.gameOverUI)
+        this.gameOverUI.visible=false
+        this.gameOverUI.restartButton.on(Laya.Event.CLICK,this,this.onRestart)
+    
+        
+        this.player.start(this)
     }
     start(){
         
@@ -209,9 +252,25 @@ class Game extends Sprite{
         this.beginUI.visible=false
         this.player.isRun=true
         $musicManager.begin()
+        this.gameUI.visible=true
     }
     onDie(){
         $musicManager.end()
+        //隐藏gameUI
+        this.gameUI.visible=false
+        //显示gameoverUI
+        this.gameOverUI.visible=true
+        this.gameOverUI.ani1.play(0,false)
+        this.gameOverUI.scoreLabel.text=String(this.score)
+    }
+    onRestart(){
+        //移除所有物体
+        var list=this.itemManager.itemList
+        for (let i=0;i<list.length;i++){
+            var item=list[i]
+            this.itemManager.remove(item)
+            this.event("restart")
+        }
     }
 
 }
