@@ -31,6 +31,10 @@ class MusicManager{
     playRandomLoop(){
         var index=Math.floor(Math.random()*this.loopList.length)
         var music=this.loopList[index]
+        if (music==this.currentMusic){
+            var index=Math.floor(Math.random()*this.loopList.length)
+            var music=this.loopList[index]
+        }
         this.play(music)
 
     }

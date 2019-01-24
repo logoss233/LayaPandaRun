@@ -21,10 +21,11 @@ var ui;
             return _super.call(this) || this;
         }
         BeginUIUI.prototype.createChildren = function () {
+            View.regComponent("Text", laya.display.Text);
             _super.prototype.createChildren.call(this);
             this.createView(ui.BeginUIUI.uiView);
         };
-        BeginUIUI.uiView = { "type": "View", "props": { "width": 1136, "height": 640 }, "child": [{ "type": "Button", "props": { "y": 323, "x": 478, "width": 193, "var": "startButton", "stateNum": 1, "skin": "ui/startButton.png", "mouseThrough": false, "mouseEnabled": true, "labelStroke": 0, "labelSize": 40, "height": 185 } }, { "type": "Image", "props": { "y": 83, "x": 356, "skin": "ui/title.png" } }] };
+        BeginUIUI.uiView = { "type": "View", "props": { "width": 1136, "height": 640 }, "child": [{ "type": "Button", "props": { "y": 323, "x": 478, "width": 193, "var": "startButton", "stateNum": 1, "skin": "ui/startButton.png", "mouseThrough": false, "mouseEnabled": true, "labelStroke": 0, "labelSize": 40, "height": 185 } }, { "type": "Image", "props": { "y": 83, "x": 356, "skin": "ui/title.png" } }, { "type": "Text", "props": { "y": 618, "x": 8, "width": 162, "text": "Powered by LayaAir Engine", "height": 30, "fontSize": 15 } }, { "type": "Text", "props": { "y": 599, "x": 35, "width": 162, "text": "北极猫工作室", "height": 30, "fontSize": 15 } }] };
         return BeginUIUI;
     }(View));
     ui.BeginUIUI = BeginUIUI;

@@ -25,6 +25,8 @@ var GameData = /** @class */ (function () {
                 "res/map/0-3.json",
                 "res/map/0-4.json",
                 "res/map/0-5.json",
+                "res/map/0-6.json",
+                "res/map/0-7.json",
             ],
             [
                 "res/map/1-0.json",

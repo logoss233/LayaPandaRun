@@ -425,7 +425,7 @@ var ___Laya=(function(){
 	Laya.timer=null;
 	Laya.scaleTimer=null;
 	Laya.loader=null;
-	Laya.version="1.8.0beta";
+	Laya.version="1.7.22";
 	Laya.render=null;
 	Laya._currentStage=null;
 	Laya._isinit=false;
@@ -560,7 +560,7 @@ var EventDispatcher=(function(){
 		(onceOnly===void 0)&& (onceOnly=false);
 		if (!this._events || !this._events[type])return this;
 		var listeners=this._events[type];
-		if (listeners !=null){
+		if (listener !=null){
 			if (listeners.run){
 				if ((!caller || listeners.caller===caller)&& listeners.method===listener && (!onceOnly || listeners.once)){
 					delete this._events[type];
@@ -4853,12 +4853,7 @@ var SoundManager=(function(){
 		if (value){
 			if (SoundManager._tMusic){
 				if (SoundManager._musicChannel&&!SoundManager._musicChannel.isStopped){
-					if (Render.isConchApp){
-						/*__JS__ */if (SoundManager._musicChannel._audio)SoundManager._musicChannel._audio.muted=true;;
-					}
-					else {
-						SoundManager._musicChannel.pause();
-					}
+					SoundManager._musicChannel.pause();
 					}else{
 					SoundManager._musicChannel=null;
 				}
@@ -4870,12 +4865,7 @@ var SoundManager=(function(){
 			SoundManager._musicMuted=value;
 			if (SoundManager._tMusic){
 				if (SoundManager._musicChannel){
-					if (Render.isConchApp){
-						/*__JS__ */if (SoundManager._musicChannel._audio)SoundManager._musicChannel._audio.muted=false;;
-					}
-					else {
-						SoundManager._musicChannel.resume();
-					}
+					SoundManager._musicChannel.resume();
 				}
 			}
 		}
@@ -21200,7 +21190,7 @@ var GraphicAnimation=(function(_super){
 })(FrameAnimation)
 
 
-	Laya.__init([EventDispatcher,LoaderManager,GraphicAnimation,Render,Browser,Timer,LocalStorage,TimeLine]);
+	Laya.__init([EventDispatcher,LoaderManager,Render,Browser,Timer,LocalStorage,TimeLine,GraphicAnimation]);
 })(window,document,Laya);
 
 (function(window,document,Laya){
@@ -21330,9 +21320,11 @@ var MiniAdpter=(function(){
 	}
 
 	MiniAdpter.getUrlEncode=function(url,type){
-		if(type=="arraybuffer")
-			return "";
-		return "utf8";
+		if(url.indexOf(".fnt")!=-1)
+			return "utf8";
+		else if(type=="arraybuffer")
+		return "";
+		return "ascii";
 	}
 
 	MiniAdpter.downLoadFile=function(fileUrl,fileType,callBack,encoding){
@@ -33281,8 +33273,6 @@ var BoneSlot=(function(){
 		this.currDisplayData=null;
 		/**显示皮肤的索引 */
 		this.displayIndex=-1;
-		/**@private */
-		this.originalIndex=-1;
 		/**用户自定义的皮肤 */
 		this._diyTexture=null;
 		this._parentMatrix=null;
@@ -33348,7 +33338,7 @@ var BoneSlot=(function(){
 	__proto.replaceDisplayByIndex=function(tarIndex,newIndex){
 		if (!this.currSlotData)return;
 		this._replaceDic[tarIndex]=newIndex;
-		if (this.originalIndex==tarIndex){
+		if (this.displayIndex==tarIndex){
 			this.showDisplayByIndex(tarIndex);
 		}
 	}
@@ -33358,7 +33348,6 @@ var BoneSlot=(function(){
 	*@param index
 	*/
 	__proto.showDisplayByIndex=function(index){
-		this.originalIndex=index;
 		if (this._replaceDic[index]!=null)index=this._replaceDic[index];
 		if (this.currSlotData && index >-1 && index < this.currSlotData.displayArr.length){
 			this.displayIndex=index;
@@ -47437,6 +47426,67 @@ var Panel=(function(_super){
 
 
 /**
+*<code>Radio</code> 控件使用户可在一组互相排斥的选择中做出一种选择。
+*用户一次只能选择 <code>Radio</code> 组中的一个成员。选择未选中的组成员将取消选择该组中当前所选的 <code>Radio</code> 控件。
+*@see laya.ui.RadioGroup
+*/
+//class laya.ui.Radio extends laya.ui.Button
+var Radio=(function(_super){
+	function Radio(skin,label){
+		/**@private */
+		this._value=null;
+		(label===void 0)&& (label="");
+		Radio.__super.call(this,skin,label);
+	}
+
+	__class(Radio,'laya.ui.Radio',_super);
+	var __proto=Radio.prototype;
+	/**@inheritDoc */
+	__proto.destroy=function(destroyChild){
+		(destroyChild===void 0)&& (destroyChild=true);
+		_super.prototype.destroy.call(this,destroyChild);
+		this._value=null;
+	}
+
+	/**@inheritDoc */
+	__proto.preinitialize=function(){
+		laya.ui.Component.prototype.preinitialize.call(this);
+		this.toggle=false;
+		this._autoSize=false;
+	}
+
+	/**@inheritDoc */
+	__proto.initialize=function(){
+		_super.prototype.initialize.call(this);
+		this.createText();
+		this._text.align="left";
+		this._text.valign="top";
+		this._text.width=0;
+		this.on(/*laya.events.Event.CLICK*/"click",this,this.onClick);
+	}
+
+	/**
+	*@private
+	*对象的<code>Event.CLICK</code>事件侦听处理函数。
+	*/
+	__proto.onClick=function(e){
+		this.selected=true;
+	}
+
+	/**
+	*获取或设置 <code>Radio</code> 关联的可选用户定义值。
+	*/
+	__getset(0,__proto,'value',function(){
+		return this._value !=null ? this._value :this.label;
+		},function(obj){
+		this._value=obj;
+	});
+
+	return Radio;
+})(Button)
+
+
+/**
 *使用 <code>HSlider</code> 控件，用户可以通过在滑块轨道的终点之间移动滑块来选择值。
 *<p> <code>HSlider</code> 控件采用水平方向。滑块轨道从左向右扩展，而标签位于轨道的顶部或底部。</p>
 *
@@ -47979,67 +48029,6 @@ var UIGroup=(function(_super){
 
 	return UIGroup;
 })(Box)
-
-
-/**
-*<code>Radio</code> 控件使用户可在一组互相排斥的选择中做出一种选择。
-*用户一次只能选择 <code>Radio</code> 组中的一个成员。选择未选中的组成员将取消选择该组中当前所选的 <code>Radio</code> 控件。
-*@see laya.ui.RadioGroup
-*/
-//class laya.ui.Radio extends laya.ui.Button
-var Radio=(function(_super){
-	function Radio(skin,label){
-		/**@private */
-		this._value=null;
-		(label===void 0)&& (label="");
-		Radio.__super.call(this,skin,label);
-	}
-
-	__class(Radio,'laya.ui.Radio',_super);
-	var __proto=Radio.prototype;
-	/**@inheritDoc */
-	__proto.destroy=function(destroyChild){
-		(destroyChild===void 0)&& (destroyChild=true);
-		_super.prototype.destroy.call(this,destroyChild);
-		this._value=null;
-	}
-
-	/**@inheritDoc */
-	__proto.preinitialize=function(){
-		laya.ui.Component.prototype.preinitialize.call(this);
-		this.toggle=false;
-		this._autoSize=false;
-	}
-
-	/**@inheritDoc */
-	__proto.initialize=function(){
-		_super.prototype.initialize.call(this);
-		this.createText();
-		this._text.align="left";
-		this._text.valign="top";
-		this._text.width=0;
-		this.on(/*laya.events.Event.CLICK*/"click",this,this.onClick);
-	}
-
-	/**
-	*@private
-	*对象的<code>Event.CLICK</code>事件侦听处理函数。
-	*/
-	__proto.onClick=function(e){
-		this.selected=true;
-	}
-
-	/**
-	*获取或设置 <code>Radio</code> 关联的可选用户定义值。
-	*/
-	__getset(0,__proto,'value',function(){
-		return this._value !=null ? this._value :this.label;
-		},function(obj){
-		this._value=obj;
-	});
-
-	return Radio;
-})(Button)
 
 
 /**
