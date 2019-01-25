@@ -50487,6 +50487,10 @@ var Main = /** @class */ (function () {
         Laya.stage.addChild(this.game);
         this.game.on("restart", this, this.restart);
         this.game.start();
+        //实例化排行榜
+        var rankView = new OpenView();
+        Laya.stage.addChild(rankView);
+        rankView.zOrder = 1000;
     }
     Main.prototype.restart = function () {
         //删掉game，实例化一个新的
@@ -50710,6 +50714,7 @@ var Game = /** @class */ (function (_super) {
         _this.beginUI = new ui.BeginUIUI();
         _this.addChild(_this.beginUI);
         _this.beginUI.startButton.on(Laya.Event.CLICK, _this, _this.onBeginGame);
+        _this.beginUI.rankButton.on(Laya.Event.CLICK, _this, _this.onOpenRank);
         _this.gameUI = new ui.GameUI();
         _this.addChild(_this.gameUI);
         _this.gameUI.visible = false;
@@ -50918,6 +50923,8 @@ var Game = /** @class */ (function (_super) {
         this.gameOverUI.visible = true;
         this.gameOverUI.ani1.play(0, false);
         this.gameOverUI.scoreLabel.text = String(this.score);
+        //设置分数
+        $openView.setScore(this.score);
     };
     Game.prototype.onRestart = function () {
         //移除所有物体
@@ -50927,6 +50934,9 @@ var Game = /** @class */ (function (_super) {
             this.itemManager.remove(item);
             this.event("restart");
         }
+    };
+    Game.prototype.onOpenRank = function () {
+        $openView.openRank();
     };
     return Game;
 }(Sprite));
@@ -51696,7 +51706,7 @@ var ui;
             _super.prototype.createChildren.call(this);
             this.createView(ui.BeginUIUI.uiView);
         };
-        BeginUIUI.uiView = { "type": "View", "props": { "width": 1136, "height": 640 }, "child": [{ "type": "Button", "props": { "y": 323, "x": 478, "width": 193, "var": "startButton", "stateNum": 1, "skin": "ui/startButton.png", "mouseThrough": false, "mouseEnabled": true, "labelStroke": 0, "labelSize": 40, "height": 185 } }, { "type": "Image", "props": { "y": 83, "x": 356, "skin": "ui/title.png" } }] };
+        BeginUIUI.uiView = { "type": "View", "props": { "width": 1136, "height": 640 }, "child": [{ "type": "Button", "props": { "y": 319, "x": 484, "width": 193, "var": "startButton", "stateNum": 1, "skin": "ui/startButton.png", "mouseThrough": false, "mouseEnabled": true, "labelStroke": 0, "labelSize": 40, "height": 185 } }, { "type": "Image", "props": { "y": 83, "x": 356, "skin": "ui/title.png" } }, { "type": "Button", "props": { "y": 552, "x": 946, "width": 231, "var": "rankButton", "stateNum": 1, "skin": "ui/Button.png", "pivotY": 42, "pivotX": 71, "labelSize": 45, "label": "排行榜", "height": 89 } }] };
         return BeginUIUI;
     }(View));
     ui.BeginUIUI = BeginUIUI;
@@ -51733,7 +51743,82 @@ var ui;
     }(View));
     ui.GameOverUI = GameOverUI;
 })(ui || (ui = {}));
+(function (ui) {
+    var rankViewUI = /** @class */ (function (_super) {
+        __extends(rankViewUI, _super);
+        function rankViewUI() {
+            return _super.call(this) || this;
+        }
+        rankViewUI.prototype.createChildren = function () {
+            _super.prototype.createChildren.call(this);
+            this.createView(ui.rankViewUI.uiView);
+        };
+        rankViewUI.uiView = { "type": "View", "props": { "width": 1136, "height": 640 }, "child": [{ "type": "Image", "props": { "y": -45, "x": -43, "width": 1226, "skin": "comp/blank.png", "height": 752 } }, { "type": "Sprite", "props": { "var": "openSpr" } }, { "type": "Button", "props": { "y": 474, "x": 857, "width": 255, "var": "backButton", "stateNum": 1, "skin": "ui/Button.png", "pivotY": -15, "pivotX": -8, "labelSize": 50, "label": "返回", "height": 111 } }] };
+        return rankViewUI;
+    }(View));
+    ui.rankViewUI = rankViewUI;
+})(ui || (ui = {}));
 //# sourceMappingURL=layaUI.max.all.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var $openView;
+/**
+* 管理子域显示界面
+*/
+var OpenView = /** @class */ (function (_super) {
+    __extends(OpenView, _super);
+    function OpenView() {
+        var _this = _super.call(this) || this;
+        $openView = _this;
+        if (Laya.Browser.onMiniGame) {
+            _this.openDataContext = Laya.Browser.window.wx.getOpenDataContext();
+            _this.tex = new Laya.Texture(Laya.Browser.window.sharedCanvas);
+            _this.tex.bitmap.alwaysChange = false; //小程序使用，非常费，这个参数可以根据自己的需求适当调整，如果内容不变可以不用设置成true
+            _this.openSpr.graphics.drawTexture(_this.tex);
+        }
+        _this.visible = false;
+        _this.backButton.on(Laya.Event.CLICK, _this, _this.closeRank);
+        return _this;
+    }
+    /**
+     * 上传分数
+     * @param score
+     */
+    OpenView.prototype.setScore = function (score) {
+        if (!Laya.Browser.onMiniGame) {
+            return;
+        }
+        this.openDataContext.postMessage({ "cmd": "setScore", "score": score });
+    };
+    OpenView.prototype.openRank = function () {
+        this.visible = true;
+        if (!Laya.Browser.onMiniGame) {
+            return;
+        }
+        this.tex.bitmap.alwaysChange = true;
+        this.openDataContext.postMessage({ "cmd": "showRank" });
+    };
+    OpenView.prototype.closeRank = function () {
+        this.visible = false;
+        if (!Laya.Browser.onMiniGame) {
+            return;
+        }
+        this.tex.bitmap.alwaysChange = false;
+    };
+    return OpenView;
+}(ui.rankViewUI));
+//# sourceMappingURL=OpenView.js.map
 // 程序入口
 var GameMain = /** @class */ (function () {
     function GameMain() {
@@ -51744,7 +51829,19 @@ var GameMain = /** @class */ (function () {
         Laya.stage.scaleMode = "noscale";
         Laya.stage.bgColor = "#232628";
         Laya.stage.screenMode = Stage.SCREEN_HORIZONTAL;
-        Laya.Stat.show();
+        //Laya.Stat.show()
+        //设置共享画布
+        if (Laya.Browser.onMiniGame) {
+            Laya.timer.once(1000, this, function () {
+                var wx = Laya.Browser.window.wx;
+                var sharedCanvas = Laya.Browser.window.sharedCanvas;
+                //设置共享画布大小
+                sharedCanvas.width = Laya.stage.width;
+                sharedCanvas.height = Laya.stage.height;
+                //主域往子域传消息
+                wx.postMessage({ type: "resizeShared", url: "", data: { width: Laya.stage.width, height: Laya.stage.height, matrix: Laya.stage._canvasTransform }, isLoad: false });
+            });
+        }
         this.loadAsset();
     }
     GameMain.prototype.loadAsset = function () {

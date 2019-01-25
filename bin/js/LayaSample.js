@@ -8,7 +8,19 @@ var GameMain = /** @class */ (function () {
         Laya.stage.scaleMode = "noscale";
         Laya.stage.bgColor = "#232628";
         Laya.stage.screenMode = Stage.SCREEN_HORIZONTAL;
-        Laya.Stat.show();
+        //Laya.Stat.show()
+        //设置共享画布
+        if (Laya.Browser.onMiniGame) {
+            Laya.timer.once(1000, this, function () {
+                var wx = Laya.Browser.window.wx;
+                var sharedCanvas = Laya.Browser.window.sharedCanvas;
+                //设置共享画布大小
+                sharedCanvas.width = Laya.stage.width;
+                sharedCanvas.height = Laya.stage.height;
+                //主域往子域传消息
+                wx.postMessage({ type: "resizeShared", url: "", data: { width: Laya.stage.width, height: Laya.stage.height, matrix: Laya.stage._canvasTransform }, isLoad: false });
+            });
+        }
         this.loadAsset();
     }
     GameMain.prototype.loadAsset = function () {

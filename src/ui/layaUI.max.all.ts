@@ -4,8 +4,9 @@ import Dialog=laya.ui.Dialog;
 module ui {
     export class BeginUIUI extends View {
 		public startButton:Laya.Button;
+		public rankButton:Laya.Button;
 
-        public static  uiView:any ={"type":"View","props":{"width":1136,"height":640},"child":[{"type":"Button","props":{"y":323,"x":478,"width":193,"var":"startButton","stateNum":1,"skin":"ui/startButton.png","mouseThrough":false,"mouseEnabled":true,"labelStroke":0,"labelSize":40,"height":185}},{"type":"Image","props":{"y":83,"x":356,"skin":"ui/title.png"}}]};
+        public static  uiView:any ={"type":"View","props":{"width":1136,"height":640},"child":[{"type":"Button","props":{"y":319,"x":484,"width":193,"var":"startButton","stateNum":1,"skin":"ui/startButton.png","mouseThrough":false,"mouseEnabled":true,"labelStroke":0,"labelSize":40,"height":185}},{"type":"Image","props":{"y":83,"x":356,"skin":"ui/title.png"}},{"type":"Button","props":{"y":552,"x":946,"width":231,"var":"rankButton","stateNum":1,"skin":"ui/Button.png","pivotY":42,"pivotX":71,"labelSize":45,"label":"排行榜","height":89}}]};
         constructor(){ super()}
         createChildren():void {
         
@@ -49,6 +50,23 @@ module ui {
 
             super.createChildren();
             this.createView(ui.GameOverUI.uiView);
+
+        }
+
+    }
+}
+
+module ui {
+    export class rankViewUI extends View {
+		public openSpr:Laya.Sprite;
+		public backButton:Laya.Button;
+
+        public static  uiView:any ={"type":"View","props":{"width":1136,"height":640},"child":[{"type":"Image","props":{"y":-45,"x":-43,"width":1226,"skin":"comp/blank.png","height":752}},{"type":"Sprite","props":{"var":"openSpr"}},{"type":"Button","props":{"y":474,"x":857,"width":255,"var":"backButton","stateNum":1,"skin":"ui/Button.png","pivotY":-15,"pivotX":-8,"labelSize":50,"label":"返回","height":111}}]};
+        constructor(){ super()}
+        createChildren():void {
+        
+            super.createChildren();
+            this.createView(ui.rankViewUI.uiView);
 
         }
 

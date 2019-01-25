@@ -109,6 +109,7 @@ class Game extends Sprite{
         this.beginUI=new ui.BeginUIUI()
         this.addChild(this.beginUI)
         this.beginUI.startButton.on(Laya.Event.CLICK,this,this.onBeginGame)
+        this.beginUI.rankButton.on(Laya.Event.CLICK,this,this.onOpenRank)
         
         this.gameUI=new ui.GameUI()
         this.addChild(this.gameUI)
@@ -262,6 +263,9 @@ class Game extends Sprite{
         this.gameOverUI.visible=true
         this.gameOverUI.ani1.play(0,false)
         this.gameOverUI.scoreLabel.text=String(this.score)
+        //设置分数
+        $openView.setScore(this.score)
+
     }
     onRestart(){
         //移除所有物体
@@ -271,6 +275,9 @@ class Game extends Sprite{
             this.itemManager.remove(item)
             this.event("restart")
         }
+    }
+    onOpenRank(){
+        $openView.openRank()
     }
 
 }

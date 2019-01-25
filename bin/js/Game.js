@@ -53,6 +53,7 @@ var Game = /** @class */ (function (_super) {
         _this.beginUI = new ui.BeginUIUI();
         _this.addChild(_this.beginUI);
         _this.beginUI.startButton.on(Laya.Event.CLICK, _this, _this.onBeginGame);
+        _this.beginUI.rankButton.on(Laya.Event.CLICK, _this, _this.onOpenRank);
         _this.gameUI = new ui.GameUI();
         _this.addChild(_this.gameUI);
         _this.gameUI.visible = false;
@@ -261,6 +262,8 @@ var Game = /** @class */ (function (_super) {
         this.gameOverUI.visible = true;
         this.gameOverUI.ani1.play(0, false);
         this.gameOverUI.scoreLabel.text = String(this.score);
+        //设置分数
+        $openView.setScore(this.score);
     };
     Game.prototype.onRestart = function () {
         //移除所有物体
@@ -270,6 +273,9 @@ var Game = /** @class */ (function (_super) {
             this.itemManager.remove(item);
             this.event("restart");
         }
+    };
+    Game.prototype.onOpenRank = function () {
+        $openView.openRank();
     };
     return Game;
 }(Sprite));

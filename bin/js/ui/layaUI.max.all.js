@@ -24,7 +24,7 @@ var ui;
             _super.prototype.createChildren.call(this);
             this.createView(ui.BeginUIUI.uiView);
         };
-        BeginUIUI.uiView = { "type": "View", "props": { "width": 1136, "height": 640 }, "child": [{ "type": "Button", "props": { "y": 323, "x": 478, "width": 193, "var": "startButton", "stateNum": 1, "skin": "ui/startButton.png", "mouseThrough": false, "mouseEnabled": true, "labelStroke": 0, "labelSize": 40, "height": 185 } }, { "type": "Image", "props": { "y": 83, "x": 356, "skin": "ui/title.png" } }] };
+        BeginUIUI.uiView = { "type": "View", "props": { "width": 1136, "height": 640 }, "child": [{ "type": "Button", "props": { "y": 319, "x": 484, "width": 193, "var": "startButton", "stateNum": 1, "skin": "ui/startButton.png", "mouseThrough": false, "mouseEnabled": true, "labelStroke": 0, "labelSize": 40, "height": 185 } }, { "type": "Image", "props": { "y": 83, "x": 356, "skin": "ui/title.png" } }, { "type": "Button", "props": { "y": 552, "x": 946, "width": 231, "var": "rankButton", "stateNum": 1, "skin": "ui/Button.png", "pivotY": 42, "pivotX": 71, "labelSize": 45, "label": "排行榜", "height": 89 } }] };
         return BeginUIUI;
     }(View));
     ui.BeginUIUI = BeginUIUI;
@@ -60,5 +60,20 @@ var ui;
         return GameOverUI;
     }(View));
     ui.GameOverUI = GameOverUI;
+})(ui || (ui = {}));
+(function (ui) {
+    var rankViewUI = /** @class */ (function (_super) {
+        __extends(rankViewUI, _super);
+        function rankViewUI() {
+            return _super.call(this) || this;
+        }
+        rankViewUI.prototype.createChildren = function () {
+            _super.prototype.createChildren.call(this);
+            this.createView(ui.rankViewUI.uiView);
+        };
+        rankViewUI.uiView = { "type": "View", "props": { "width": 1136, "height": 640 }, "child": [{ "type": "Image", "props": { "y": -45, "x": -43, "width": 1226, "skin": "comp/blank.png", "height": 752 } }, { "type": "Sprite", "props": { "var": "openSpr" } }, { "type": "Button", "props": { "y": 474, "x": 857, "width": 255, "var": "backButton", "stateNum": 1, "skin": "ui/Button.png", "pivotY": -15, "pivotX": -8, "labelSize": 50, "label": "返回", "height": 111 } }] };
+        return rankViewUI;
+    }(View));
+    ui.rankViewUI = rankViewUI;
 })(ui || (ui = {}));
 //# sourceMappingURL=layaUI.max.all.js.map
