@@ -53,6 +53,8 @@ class GameMain{
             "res/map/0-3.json",
             "res/map/0-4.json",
             "res/map/0-5.json",
+            "res/map/0-6.json",
+            "res/map/0-7.json",
             "res/map/1-0.json",
             "res/map/1-1.json",
             "res/map/1-2.json",
@@ -102,6 +104,30 @@ class GameMain{
         new GameData()
         
         new MusicManager()
+        
+        //预先生成一些对象池物体，防止运行中卡顿
+        for (let i=0;i<30;i++){
+            let item=new Floor()
+            Pool.recover("Floor",item)
+        }
+        for (let i=0;i<10;i++){
+            let item=new Ball1()
+            Pool.recover("Ball1",item)
+        }
+        for (let i=0;i<10;i++){
+            let item=new Ball2()
+            Pool.recover("Ball2",item)
+        }
+        for (let i=0;i<20;i++){
+            let item=new Coin()
+            Pool.recover("Coin",item)
+        }
+        for (let i=0;i<10;i++){
+            let item=new Stab()
+            Pool.recover("Stab",item)
+        }
+
+        
         //开始游戏
         new Main()
     }

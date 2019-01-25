@@ -425,7 +425,7 @@ var ___Laya=(function(){
 	Laya.timer=null;
 	Laya.scaleTimer=null;
 	Laya.loader=null;
-	Laya.version="1.8.0beta";
+	Laya.version="1.7.22";
 	Laya.render=null;
 	Laya._currentStage=null;
 	Laya._isinit=false;
@@ -560,7 +560,7 @@ var EventDispatcher=(function(){
 		(onceOnly===void 0)&& (onceOnly=false);
 		if (!this._events || !this._events[type])return this;
 		var listeners=this._events[type];
-		if (listeners !=null){
+		if (listener !=null){
 			if (listeners.run){
 				if ((!caller || listeners.caller===caller)&& listeners.method===listener && (!onceOnly || listeners.once)){
 					delete this._events[type];
@@ -4853,12 +4853,7 @@ var SoundManager=(function(){
 		if (value){
 			if (SoundManager._tMusic){
 				if (SoundManager._musicChannel&&!SoundManager._musicChannel.isStopped){
-					if (Render.isConchApp){
-						/*__JS__ */if (SoundManager._musicChannel._audio)SoundManager._musicChannel._audio.muted=true;;
-					}
-					else {
-						SoundManager._musicChannel.pause();
-					}
+					SoundManager._musicChannel.pause();
 					}else{
 					SoundManager._musicChannel=null;
 				}
@@ -4870,12 +4865,7 @@ var SoundManager=(function(){
 			SoundManager._musicMuted=value;
 			if (SoundManager._tMusic){
 				if (SoundManager._musicChannel){
-					if (Render.isConchApp){
-						/*__JS__ */if (SoundManager._musicChannel._audio)SoundManager._musicChannel._audio.muted=false;;
-					}
-					else {
-						SoundManager._musicChannel.resume();
-					}
+					SoundManager._musicChannel.resume();
 				}
 			}
 		}
@@ -21200,7 +21190,7 @@ var GraphicAnimation=(function(_super){
 })(FrameAnimation)
 
 
-	Laya.__init([EventDispatcher,LoaderManager,GraphicAnimation,Render,Browser,Timer,LocalStorage,TimeLine]);
+	Laya.__init([EventDispatcher,LoaderManager,Render,Browser,Timer,LocalStorage,TimeLine,GraphicAnimation]);
 })(window,document,Laya);
 
 (function(window,document,Laya){

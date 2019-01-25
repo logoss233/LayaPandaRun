@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 2019/01/25-19:22:32.978 6c8 Reusing MANIFEST leveldb/MANIFEST-000001
 2019/01/25-19:22:32.980 6c8 Recovering log #13
 2019/01/25-19:22:32.980 6c8 Level-0 table #16: started
@@ -11,3 +12,8 @@
 2019/01/25-19:22:33.016 3f4c Delete type=2 #11
 2019/01/25-19:22:33.017 3f4c Delete type=2 #14
 2019/01/25-19:22:33.018 3f4c Delete type=2 #16
+=======
+2019/01/24-12:52:45.121 2d88 Reusing MANIFEST leveldb/MANIFEST-000001
+2019/01/24-12:52:45.122 2d88 Recovering log #17
+2019/01/24-12:52:45.122 2d88 Reusing old log leveldb/000017.log 
+>>>>>>> 460982468b7d4219800bb643c1d6c2382ab1dc5b

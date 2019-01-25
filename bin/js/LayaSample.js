@@ -42,6 +42,8 @@ var GameMain = /** @class */ (function () {
             "res/map/0-3.json",
             "res/map/0-4.json",
             "res/map/0-5.json",
+            "res/map/0-6.json",
+            "res/map/0-7.json",
             "res/map/1-0.json",
             "res/map/1-1.json",
             "res/map/1-2.json",
@@ -89,6 +91,27 @@ var GameMain = /** @class */ (function () {
         //把data准备好
         new GameData();
         new MusicManager();
+        //预先生成一些对象池物体，防止运行中卡顿
+        for (var i = 0; i < 30; i++) {
+            var item = new Floor();
+            Pool.recover("Floor", item);
+        }
+        for (var i = 0; i < 10; i++) {
+            var item = new Ball1();
+            Pool.recover("Ball1", item);
+        }
+        for (var i = 0; i < 10; i++) {
+            var item = new Ball2();
+            Pool.recover("Ball2", item);
+        }
+        for (var i = 0; i < 20; i++) {
+            var item = new Coin();
+            Pool.recover("Coin", item);
+        }
+        for (var i = 0; i < 10; i++) {
+            var item = new Stab();
+            Pool.recover("Stab", item);
+        }
         //开始游戏
         new Main();
     };

@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 2019/01/25-19:21:32.747 1af0 Reusing MANIFEST c:\Users\46301\Desktop\LayaProject\LayaPandaRun\.laya\chrome\Default\Site Characteristics Database/MANIFEST-000001
 2019/01/25-19:21:32.748 1af0 Recovering log #6
 2019/01/25-19:21:32.749 1af0 Reusing old log c:\Users\46301\Desktop\LayaProject\LayaPandaRun\.laya\chrome\Default\Site Characteristics Database/000006.log 
+=======
+2019/01/24-12:52:13.113 1448 Reusing MANIFEST g:\layaProject\PandaRun\.laya\chrome\Default\Site Characteristics Database/MANIFEST-000001
+2019/01/24-12:52:13.114 1448 Recovering log #6
+2019/01/24-12:52:13.114 1448 Reusing old log g:\layaProject\PandaRun\.laya\chrome\Default\Site Characteristics Database/000006.log 
+>>>>>>> 460982468b7d4219800bb643c1d6c2382ab1dc5b

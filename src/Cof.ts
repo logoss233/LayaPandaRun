@@ -10,6 +10,7 @@ import Texture=Laya.Texture
 import Animation=Laya.Animation
 import Pool=Laya.Pool
 import SoundManager=Laya.SoundManager
+import Browser=Laya.Browser
 
 /**
  * 配置  静态类
