@@ -14,7 +14,7 @@ class OpenView extends ui.rankViewUI{
             
             this.tex= new Laya.Texture(Laya.Browser.window.sharedCanvas);
             this.tex.bitmap.alwaysChange = false;//小程序使用，非常费，这个参数可以根据自己的需求适当调整，如果内容不变可以不用设置成true
-            this.openSpr.graphics.drawTexture(this.tex);
+            this.openSpr.graphics.drawTexture(this.tex,0,0,Laya.stage.width,Laya.stage.height);
         }
             this.visible=false
 

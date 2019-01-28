@@ -50247,6 +50247,7 @@ var Texture = Laya.Texture;
 var Animation = Laya.Animation;
 var Pool = Laya.Pool;
 var SoundManager = Laya.SoundManager;
+var Browser = Laya.Browser;
 /**
  * 配置  静态类
  */
@@ -50459,6 +50460,10 @@ var MusicManager = /** @class */ (function () {
     MusicManager.prototype.playRandomLoop = function () {
         var index = Math.floor(Math.random() * this.loopList.length);
         var music = this.loopList[index];
+        if (music == this.currentMusic) {
+            var index = Math.floor(Math.random() * this.loopList.length);
+            var music = this.loopList[index];
+        }
         this.play(music);
     };
     MusicManager.prototype.begin = function () {
@@ -50594,6 +50599,8 @@ var GameData = /** @class */ (function () {
                 "res/map/0-3.json",
                 "res/map/0-4.json",
                 "res/map/0-5.json",
+                "res/map/0-6.json",
+                "res/map/0-7.json",
             ],
             [
                 "res/map/1-0.json",
@@ -50654,7 +50661,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -50936,7 +50943,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -50974,7 +50981,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51008,7 +51015,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51048,7 +51055,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51075,7 +51082,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51135,7 +51142,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51176,7 +51183,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51217,7 +51224,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51240,7 +51247,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51265,7 +51272,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51290,7 +51297,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51315,7 +51322,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51370,7 +51377,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51675,7 +51682,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51692,6 +51699,7 @@ var ui;
             return _super.call(this) || this;
         }
         BeginUIUI.prototype.createChildren = function () {
+            View.regComponent("Text", laya.display.Text);
             _super.prototype.createChildren.call(this);
             this.createView(ui.BeginUIUI.uiView);
         };
@@ -51754,7 +51762,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51774,7 +51782,7 @@ var OpenView = /** @class */ (function (_super) {
             _this.openDataContext = Laya.Browser.window.wx.getOpenDataContext();
             _this.tex = new Laya.Texture(Laya.Browser.window.sharedCanvas);
             _this.tex.bitmap.alwaysChange = false; //小程序使用，非常费，这个参数可以根据自己的需求适当调整，如果内容不变可以不用设置成true
-            _this.openSpr.graphics.drawTexture(_this.tex);
+            _this.openSpr.graphics.drawTexture(_this.tex, 0, 0, Laya.stage.width, Laya.stage.height);
         }
         _this.visible = false;
         _this.backButton.on(Laya.Event.CLICK, _this, _this.closeRank);
@@ -51811,7 +51819,7 @@ var OpenView = /** @class */ (function (_super) {
 // 程序入口
 var GameMain = /** @class */ (function () {
     function GameMain() {
-        Laya.MiniAdpter.init(true, false);
+        Laya.MiniAdpter.init(false, false); //不需要穿资源 ，暂时设为false
         Laya.init(Cof.DesinWidth, Cof.DesinHeight, WebGL);
         Laya.stage.alignH = Laya.Stage.ALIGN_LEFT;
         Laya.stage.alignV = Laya.Stage.ALIGN_TOP;
@@ -51823,8 +51831,15 @@ var GameMain = /** @class */ (function () {
         if (Laya.Browser.onMiniGame) {
             Laya.timer.once(1000, this, function () {
                 var wx = Laya.Browser.window.wx;
-                var sharedCanvas = Laya.Browser.window.sharedCanvas;
+                //let sharedCanvas=Laya.Browser.window.sharedCanvas
                 //设置共享画布大小
+                //sharedCanvas.width = Laya.stage.width;
+                //sharedCanvas.height = Laya.stage.height;
+                //var systemInfo=wx.getSystemInfoSync()
+                //sharedCanvas.width =systemInfo.windowWidth
+                //sharedCanvas.height =systemInfo.windowHeight;
+                //设置共享画布大小
+                var sharedCanvas = wx.getOpenDataContext().canvas;
                 sharedCanvas.width = Laya.stage.width;
                 sharedCanvas.height = Laya.stage.height;
                 //主域往子域传消息
@@ -51852,6 +51867,8 @@ var GameMain = /** @class */ (function () {
             "res/map/0-3.json",
             "res/map/0-4.json",
             "res/map/0-5.json",
+            "res/map/0-6.json",
+            "res/map/0-7.json",
             "res/map/1-0.json",
             "res/map/1-1.json",
             "res/map/1-2.json",
@@ -51899,6 +51916,27 @@ var GameMain = /** @class */ (function () {
         //把data准备好
         new GameData();
         new MusicManager();
+        //预先生成一些对象池物体，防止运行中卡顿
+        for (var i = 0; i < 30; i++) {
+            var item = new Floor();
+            Pool.recover("Floor", item);
+        }
+        for (var i = 0; i < 10; i++) {
+            var item = new Ball1();
+            Pool.recover("Ball1", item);
+        }
+        for (var i = 0; i < 10; i++) {
+            var item = new Ball2();
+            Pool.recover("Ball2", item);
+        }
+        for (var i = 0; i < 20; i++) {
+            var item = new Coin();
+            Pool.recover("Coin", item);
+        }
+        for (var i = 0; i < 10; i++) {
+            var item = new Stab();
+            Pool.recover("Stab", item);
+        }
         //开始游戏
         new Main();
     };

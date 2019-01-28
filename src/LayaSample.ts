@@ -3,7 +3,7 @@
 class GameMain{
     constructor()
     {
-        Laya.MiniAdpter.init(true,false)
+        Laya.MiniAdpter.init(false,false)  //不需要穿资源 ，暂时设为false
         Laya.init(Cof.DesinWidth,Cof.DesinHeight, WebGL);
         Laya.stage.alignH=Laya.Stage.ALIGN_LEFT
         Laya.stage.alignV=Laya.Stage.ALIGN_TOP
@@ -11,23 +11,26 @@ class GameMain{
         Laya.stage.bgColor="#232628"
         Laya.stage.screenMode = Stage.SCREEN_HORIZONTAL;
         //Laya.Stat.show()
-
         //设置共享画布
         if (Laya.Browser.onMiniGame)
 			{
 				Laya.timer.once(1000, this, function():void{
                     let wx=Laya.Browser.window.wx
-                    let sharedCanvas=Laya.Browser.window.sharedCanvas
+                    //let sharedCanvas=Laya.Browser.window.sharedCanvas
 					//设置共享画布大小
-					sharedCanvas.width = Laya.stage.width;
-					sharedCanvas.height = Laya.stage.height;
+					//sharedCanvas.width = Laya.stage.width;
+					//sharedCanvas.height = Laya.stage.height;
+                    //var systemInfo=wx.getSystemInfoSync()
+                    //sharedCanvas.width =systemInfo.windowWidth
+					//sharedCanvas.height =systemInfo.windowHeight;
+                    //设置共享画布大小
+                     let sharedCanvas = wx.getOpenDataContext().canvas;
+                    sharedCanvas.width = Laya.stage.width;
+                    sharedCanvas.height = Laya.stage.height;
 					//主域往子域传消息
 					wx.postMessage({type:"resizeShared",url:"",data:{width:Laya.stage.width,height:Laya.stage.height,matrix:Laya.stage._canvasTransform},isLoad:false});
 				});
 			}
-
-
-
         this.loadAsset()
     }
 

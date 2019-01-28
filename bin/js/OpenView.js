@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -24,7 +24,7 @@ var OpenView = /** @class */ (function (_super) {
             _this.openDataContext = Laya.Browser.window.wx.getOpenDataContext();
             _this.tex = new Laya.Texture(Laya.Browser.window.sharedCanvas);
             _this.tex.bitmap.alwaysChange = false; //小程序使用，非常费，这个参数可以根据自己的需求适当调整，如果内容不变可以不用设置成true
-            _this.openSpr.graphics.drawTexture(_this.tex);
+            _this.openSpr.graphics.drawTexture(_this.tex, 0, 0, Laya.stage.width, Laya.stage.height);
         }
         _this.visible = false;
         _this.backButton.on(Laya.Event.CLICK, _this, _this.closeRank);

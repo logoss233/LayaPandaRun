@@ -1,7 +1,7 @@
 // 程序入口
 var GameMain = /** @class */ (function () {
     function GameMain() {
-        Laya.MiniAdpter.init(true, false);
+        Laya.MiniAdpter.init(false, false); //不需要穿资源 ，暂时设为false
         Laya.init(Cof.DesinWidth, Cof.DesinHeight, WebGL);
         Laya.stage.alignH = Laya.Stage.ALIGN_LEFT;
         Laya.stage.alignV = Laya.Stage.ALIGN_TOP;
@@ -13,8 +13,15 @@ var GameMain = /** @class */ (function () {
         if (Laya.Browser.onMiniGame) {
             Laya.timer.once(1000, this, function () {
                 var wx = Laya.Browser.window.wx;
-                var sharedCanvas = Laya.Browser.window.sharedCanvas;
+                //let sharedCanvas=Laya.Browser.window.sharedCanvas
                 //设置共享画布大小
+                //sharedCanvas.width = Laya.stage.width;
+                //sharedCanvas.height = Laya.stage.height;
+                //var systemInfo=wx.getSystemInfoSync()
+                //sharedCanvas.width =systemInfo.windowWidth
+                //sharedCanvas.height =systemInfo.windowHeight;
+                //设置共享画布大小
+                var sharedCanvas = wx.getOpenDataContext().canvas;
                 sharedCanvas.width = Laya.stage.width;
                 sharedCanvas.height = Laya.stage.height;
                 //主域往子域传消息

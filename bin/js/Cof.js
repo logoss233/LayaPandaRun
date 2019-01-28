@@ -10,6 +10,7 @@ var Texture = Laya.Texture;
 var Animation = Laya.Animation;
 var Pool = Laya.Pool;
 var SoundManager = Laya.SoundManager;
+var Browser = Laya.Browser;
 /**
  * 配置  静态类
  */
