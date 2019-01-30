@@ -21,7 +21,6 @@ var ui;
             return _super.call(this) || this;
         }
         BeginUIUI.prototype.createChildren = function () {
-            View.regComponent("Text", laya.display.Text);
             _super.prototype.createChildren.call(this);
             this.createView(ui.BeginUIUI.uiView);
         };
