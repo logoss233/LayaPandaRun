@@ -36,6 +36,7 @@ class OpenView extends ui.rankViewUI{
         if(!Laya.Browser.onMiniGame){
             return
         }
+        
         this.tex.bitmap.alwaysChange=true
         this.openDataContext.postMessage({"cmd":"showRank"})
     }

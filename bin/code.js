@@ -50661,7 +50661,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -50685,6 +50685,20 @@ var Game = /** @class */ (function (_super) {
         _this.levelChangeDistance = 1000;
         //------------状态
         _this._state = "";
+        if (Laya.Browser.onMiniGame) {
+            //配置微信分享
+            var wx = Laya.Browser.window.wx;
+            wx.showShareMenu();
+            wx.onShareAppMessage(function () {
+                return {
+                    title: '熊猫向前冲',
+                    imageUrl: Laya.Render.canvas.toTempFilePathSync({
+                        destWidth: 500,
+                        destHeight: 400
+                    })
+                };
+            });
+        }
         $game = _this;
         _this.camLayer = new Sprite();
         _this.addChild(_this.camLayer);
@@ -50711,6 +50725,7 @@ var Game = /** @class */ (function (_super) {
         _this.addChild(_this.beginUI);
         _this.beginUI.startButton.on(Laya.Event.CLICK, _this, _this.onBeginGame);
         _this.beginUI.rankButton.on(Laya.Event.CLICK, _this, _this.onOpenRank);
+        _this.beginUI.shareButton.on(Laya.Event.CLICK, _this, _this.share);
         _this.gameUI = new ui.GameUI();
         _this.addChild(_this.gameUI);
         _this.gameUI.visible = false;
@@ -50934,6 +50949,14 @@ var Game = /** @class */ (function (_super) {
     Game.prototype.onOpenRank = function () {
         $openView.openRank();
     };
+    Game.prototype.share = function () {
+        if (Laya.Browser.onMiniGame) {
+            var wx = Laya.Browser.window.wx;
+            wx.shareAppMessage({
+                title: '快来一起跑酷吧'
+            });
+        }
+    };
     return Game;
 }(Sprite));
 //# sourceMappingURL=Game.js.map
@@ -50943,7 +50966,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -50981,7 +51004,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51015,7 +51038,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51055,7 +51078,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51082,7 +51105,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51142,7 +51165,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51183,7 +51206,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51224,7 +51247,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51247,7 +51270,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51272,7 +51295,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51297,7 +51320,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51322,7 +51345,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51377,7 +51400,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51521,6 +51544,7 @@ var Player = /** @class */ (function (_super) {
         //Laya.stage.on(Laya.Event.RIGHT_MOUSE_DOWN,this,this.onRightMouseDown)
         $game.gameUI.downButton.on(Laya.Event.MOUSE_DOWN, this, this.onRightMouseDown);
         $game.gameUI.upButton.on(Laya.Event.MOUSE_DOWN, this, this.onMouseDown);
+        Laya.stage.on(Laya.Event.KEY_DOWN, this, this.onkeyDown);
     };
     //---------------------------
     Player.prototype.update = function () {
@@ -51673,6 +51697,14 @@ var Player = /** @class */ (function (_super) {
             this.setLastPressed("down");
         }
     };
+    Player.prototype.onkeyDown = function (e) {
+        if (e.keyCode == 38) {
+            this.setLastPressed("jump");
+        }
+        if (e.keyCode == 40) {
+            this.setLastPressed("down");
+        }
+    };
     return Player;
 }(Sprite));
 //# sourceMappingURL=Player.js.map
@@ -51682,7 +51714,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -51699,11 +51731,10 @@ var ui;
             return _super.call(this) || this;
         }
         BeginUIUI.prototype.createChildren = function () {
-            View.regComponent("Text", laya.display.Text);
             _super.prototype.createChildren.call(this);
             this.createView(ui.BeginUIUI.uiView);
         };
-        BeginUIUI.uiView = { "type": "View", "props": { "width": 1136, "height": 640 }, "child": [{ "type": "Button", "props": { "y": 319, "x": 484, "width": 193, "var": "startButton", "stateNum": 1, "skin": "ui/startButton.png", "mouseThrough": false, "mouseEnabled": true, "labelStroke": 0, "labelSize": 40, "height": 185 } }, { "type": "Image", "props": { "y": 83, "x": 356, "skin": "ui/title.png" } }, { "type": "Button", "props": { "y": 552, "x": 946, "width": 231, "var": "rankButton", "stateNum": 1, "skin": "ui/Button.png", "pivotY": 42, "pivotX": 71, "labelSize": 45, "label": "排行榜", "height": 89 } }] };
+        BeginUIUI.uiView = { "type": "View", "props": { "width": 1136, "height": 640 }, "child": [{ "type": "Button", "props": { "y": 319, "x": 484, "width": 193, "var": "startButton", "stateNum": 1, "skin": "ui/startButton.png", "mouseThrough": false, "mouseEnabled": true, "labelStroke": 0, "labelSize": 40, "height": 185 } }, { "type": "Image", "props": { "y": 83, "x": 356, "skin": "ui/title.png" } }, { "type": "Button", "props": { "y": 552, "x": 946, "width": 231, "var": "rankButton", "stateNum": 1, "skin": "ui/Button.png", "pivotY": 42, "pivotX": 71, "labelSize": 45, "label": "排行榜", "height": 89 } }, { "type": "Button", "props": { "y": 548, "x": 103, "width": 231, "var": "shareButton", "stateNum": 1, "skin": "ui/Button.png", "pivotY": 42, "pivotX": 71, "labelSize": 45, "label": "分享好友", "height": 89 } }] };
         return BeginUIUI;
     }(View));
     ui.BeginUIUI = BeginUIUI;
@@ -51762,7 +51793,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }

@@ -126,7 +126,6 @@ class Player extends Sprite{
         this.magnentAni.play(0,true,"ani1")
         this.magnentAni.visible=false
 
-        
     }
     start(game:Game){
         this.game=game
@@ -137,11 +136,14 @@ class Player extends Sprite{
         //Laya.stage.on(Laya.Event.RIGHT_MOUSE_DOWN,this,this.onRightMouseDown)
         $game.gameUI.downButton.on(Laya.Event.MOUSE_DOWN,this,this.onRightMouseDown)
         $game.gameUI.upButton.on(Laya.Event.MOUSE_DOWN,this,this.onMouseDown)
+        Laya.stage.on(Laya.Event.KEY_DOWN, this, this.onkeyDown);
     }
 
 //---------------------------
     update(){
         
+
+
         this.hspeed=0
         //重力加速度
         this.vspeed+=this.gravity
@@ -307,7 +309,14 @@ class Player extends Sprite{
         }
         
     }
-
+    onkeyDown(e){
+        if(e.keyCode==38){
+            this.setLastPressed("jump")
+        }
+        if(e.keyCode==40){
+            this.setLastPressed("down")
+        }
+    }
 
 
 

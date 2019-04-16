@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -28,6 +28,20 @@ var Game = /** @class */ (function (_super) {
         _this.levelChangeDistance = 1000;
         //------------状态
         _this._state = "";
+        if (Laya.Browser.onMiniGame) {
+            //配置微信分享
+            var wx = Laya.Browser.window.wx;
+            wx.showShareMenu();
+            wx.onShareAppMessage(function () {
+                return {
+                    title: '熊猫向前冲',
+                    imageUrl: Laya.Render.canvas.toTempFilePathSync({
+                        destWidth: 500,
+                        destHeight: 400
+                    })
+                };
+            });
+        }
         $game = _this;
         _this.camLayer = new Sprite();
         _this.addChild(_this.camLayer);
@@ -54,6 +68,7 @@ var Game = /** @class */ (function (_super) {
         _this.addChild(_this.beginUI);
         _this.beginUI.startButton.on(Laya.Event.CLICK, _this, _this.onBeginGame);
         _this.beginUI.rankButton.on(Laya.Event.CLICK, _this, _this.onOpenRank);
+        _this.beginUI.shareButton.on(Laya.Event.CLICK, _this, _this.share);
         _this.gameUI = new ui.GameUI();
         _this.addChild(_this.gameUI);
         _this.gameUI.visible = false;
@@ -276,6 +291,14 @@ var Game = /** @class */ (function (_super) {
     };
     Game.prototype.onOpenRank = function () {
         $openView.openRank();
+    };
+    Game.prototype.share = function () {
+        if (Laya.Browser.onMiniGame) {
+            var wx = Laya.Browser.window.wx;
+            wx.shareAppMessage({
+                title: '快来一起跑酷吧'
+            });
+        }
     };
     return Game;
 }(Sprite));

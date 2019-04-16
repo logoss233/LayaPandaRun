@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -148,6 +148,7 @@ var Player = /** @class */ (function (_super) {
         //Laya.stage.on(Laya.Event.RIGHT_MOUSE_DOWN,this,this.onRightMouseDown)
         $game.gameUI.downButton.on(Laya.Event.MOUSE_DOWN, this, this.onRightMouseDown);
         $game.gameUI.upButton.on(Laya.Event.MOUSE_DOWN, this, this.onMouseDown);
+        Laya.stage.on(Laya.Event.KEY_DOWN, this, this.onkeyDown);
     };
     //---------------------------
     Player.prototype.update = function () {
@@ -297,6 +298,14 @@ var Player = /** @class */ (function (_super) {
     };
     Player.prototype.onRightMouseDown = function () {
         if (this.isRun) {
+            this.setLastPressed("down");
+        }
+    };
+    Player.prototype.onkeyDown = function (e) {
+        if (e.keyCode == 38) {
+            this.setLastPressed("jump");
+        }
+        if (e.keyCode == 40) {
             this.setLastPressed("down");
         }
     };
