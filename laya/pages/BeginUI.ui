@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":5,
+    "selecteID":8,
     "props":{"width":1136,"sceneColor":"#000000","sceneBg":"laya/views/BeginUI.jpg","height":640},
     "nodeParent":-1,
     "label":"View",
@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":319,"x":484,"width":193,"var":"startButton","stateNum":"1","skin":"ui/startButton.png","mouseThrough":false,"mouseEnabled":true,"labelStroke":0,"labelSize":40,"height":185},
+            "props":{"y":237,"x":479,"width":193,"var":"startButton","stateNum":"1","skin":"ui/startButton.png","mouseThrough":false,"mouseEnabled":true,"labelStroke":0,"labelSize":40,"height":185},
             "nodeParent":1,
             "label":"Button(startButton)",
             "isDirectory":false,
@@ -63,6 +63,47 @@
             "compId":5,
             "child":[
                 ]
+        },
+        {
+            "x":15,
+            "type":"Text",
+            "props":{"y":7,"x":12,"text":"Powered by LayaAir Engine","strokeColor":"#ffffff","stroke":2,"fontSize":18,"font":"Arial","color":"#000000","bold":true},
+            "nodeParent":1,
+            "label":"Text",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":7,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Sprite",
+            "props":{"y":33,"x":19,"width":158,"var":"starGame","height":144},
+            "nodeParent":1,
+            "label":"Sprite(starGame)",
+            "isOpen":true,
+            "isDirectory":true,
+            "isAniNode":true,
+            "hasChild":true,
+            "compId":8,
+            "child":[
+                {
+                    "x":30,
+                    "type":"AdvImage",
+                    "props":{"y":16,"x":20,"iconSign":"ADSprite"},
+                    "nodeParent":8,
+                    "label":"AdvImage",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":6,
+                    "child":[
+                        ],
+                    "$LOCKED":false,
+                    "$HIDDEN":false
+                }]
         }],
     "animations":[
         {

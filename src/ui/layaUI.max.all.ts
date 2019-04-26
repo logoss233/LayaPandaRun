@@ -6,11 +6,14 @@ module ui {
 		public startButton:Laya.Button;
 		public rankButton:Laya.Button;
 		public shareButton:Laya.Button;
+		public starGame:Laya.Sprite;
 
-        public static  uiView:any ={"type":"View","props":{"width":1136,"height":640},"child":[{"type":"Button","props":{"y":319,"x":484,"width":193,"var":"startButton","stateNum":1,"skin":"ui/startButton.png","mouseThrough":false,"mouseEnabled":true,"labelStroke":0,"labelSize":40,"height":185}},{"type":"Image","props":{"y":83,"x":356,"skin":"ui/title.png"}},{"type":"Button","props":{"y":552,"x":946,"width":231,"var":"rankButton","stateNum":1,"skin":"ui/Button.png","pivotY":42,"pivotX":71,"labelSize":45,"label":"排行榜","height":89}},{"type":"Button","props":{"y":548,"x":103,"width":231,"var":"shareButton","stateNum":1,"skin":"ui/Button.png","pivotY":42,"pivotX":71,"labelSize":45,"label":"分享好友","height":89}}]};
+        public static  uiView:any ={"type":"View","props":{"width":1136,"height":640},"child":[{"type":"Button","props":{"y":237,"x":479,"width":193,"var":"startButton","stateNum":1,"skin":"ui/startButton.png","mouseThrough":false,"mouseEnabled":true,"labelStroke":0,"labelSize":40,"height":185}},{"type":"Image","props":{"y":83,"x":356,"skin":"ui/title.png"}},{"type":"Button","props":{"y":552,"x":946,"width":231,"var":"rankButton","stateNum":1,"skin":"ui/Button.png","pivotY":42,"pivotX":71,"labelSize":45,"label":"排行榜","height":89}},{"type":"Button","props":{"y":548,"x":103,"width":231,"var":"shareButton","stateNum":1,"skin":"ui/Button.png","pivotY":42,"pivotX":71,"labelSize":45,"label":"分享好友","height":89}},{"type":"Text","props":{"y":7,"x":12,"text":"Powered by LayaAir Engine","strokeColor":"#ffffff","stroke":2,"fontSize":18,"font":"Arial","color":"#000000","bold":true}},{"type":"Sprite","props":{"y":33,"x":19,"width":158,"var":"starGame","height":144},"child":[{"type":"AdvImage","props":{"y":16,"x":20,"iconSign":"ADSprite"}}]}]};
         constructor(){ super()}
         createChildren():void {
-        
+        			View.regComponent("Text",laya.display.Text);
+			View.regComponent("AdvImage",laya.ui.AdvImage);
+
             super.createChildren();
             this.createView(ui.BeginUIUI.uiView);
 
@@ -44,7 +47,7 @@ module ui {
 		public scoreLabel:laya.display.Text;
 		public restartButton:Laya.Button;
 
-        public static  uiView:any ={"type":"View","props":{"width":1136,"height":640},"child":[{"type":"Sprite","props":{"y":331,"x":566,"width":406,"scaleY":1,"scaleX":1,"pivotY":170,"pivotX":200,"height":342},"compId":5,"child":[{"type":"Image","props":{"y":-18,"x":-29,"skin":"ui/GameOverPanel.png"}},{"type":"Text","props":{"y":150,"x":202,"width":162,"var":"scoreLabel","text":"1000","strokeColor":"#2a2a2a","stroke":4,"height":57,"fontSize":50,"color":"#bb2422","bold":true}},{"type":"Button","props":{"y":217,"x":51,"var":"restartButton","stateNum":1,"skin":"ui/Button.png","labelStrokeColor":"#712f2f","labelStroke":8,"labelSize":50,"labelColors":"#bb2422","labelBold":true,"label":"重    玩"}}]}],"animations":[{"nodes":[{"target":5,"keyframes":{"scaleY":[{"value":0,"tweenMethod":"linearNone","tween":true,"target":5,"key":"scaleY","index":0},{"value":0,"tweenMethod":"linearNone","tween":true,"target":5,"key":"scaleY","index":10},{"value":1,"tweenMethod":"linearNone","tween":true,"target":5,"key":"scaleY","index":30}],"scaleX":[{"value":0,"tweenMethod":"linearNone","tween":true,"target":5,"key":"scaleX","index":0},{"value":0,"tweenMethod":"linearNone","tween":true,"target":5,"key":"scaleX","index":10},{"value":1,"tweenMethod":"linearNone","tween":true,"target":5,"key":"scaleX","index":30}]}}],"name":"ani1","id":1,"frameRate":24,"action":0}]};
+        public static  uiView:any ={"type":"View","props":{"width":1136,"height":640},"child":[{"type":"Sprite","props":{"y":255,"x":576,"width":406,"scaleY":1,"scaleX":1,"pivotY":170,"pivotX":200,"height":342},"compId":5,"child":[{"type":"Image","props":{"y":-18,"x":-29,"skin":"ui/GameOverPanel.png"}},{"type":"Text","props":{"y":150,"x":202,"width":162,"var":"scoreLabel","text":"1000","strokeColor":"#2a2a2a","stroke":4,"height":57,"fontSize":50,"color":"#bb2422","bold":true}},{"type":"Button","props":{"y":217,"x":51,"var":"restartButton","stateNum":1,"skin":"ui/Button.png","labelStrokeColor":"#712f2f","labelStroke":8,"labelSize":50,"labelColors":"#bb2422","labelBold":true,"label":"重    玩"}}]}],"animations":[{"nodes":[{"target":5,"keyframes":{"scaleY":[{"value":0,"tweenMethod":"linearNone","tween":true,"target":5,"key":"scaleY","index":0},{"value":0,"tweenMethod":"linearNone","tween":true,"target":5,"key":"scaleY","index":10},{"value":1,"tweenMethod":"linearNone","tween":true,"target":5,"key":"scaleY","index":30}],"scaleX":[{"value":0,"tweenMethod":"linearNone","tween":true,"target":5,"key":"scaleX","index":0},{"value":0,"tweenMethod":"linearNone","tween":true,"target":5,"key":"scaleX","index":10},{"value":1,"tweenMethod":"linearNone","tween":true,"target":5,"key":"scaleX","index":30}]}}],"name":"ani1","id":1,"frameRate":24,"action":0}]};
         constructor(){ super()}
         createChildren():void {
         			View.regComponent("Text",laya.display.Text);

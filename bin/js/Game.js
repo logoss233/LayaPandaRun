@@ -28,20 +28,6 @@ var Game = /** @class */ (function (_super) {
         _this.levelChangeDistance = 1000;
         //------------状态
         _this._state = "";
-        if (Laya.Browser.onMiniGame) {
-            //配置微信分享
-            var wx = Laya.Browser.window.wx;
-            wx.showShareMenu();
-            wx.onShareAppMessage(function () {
-                return {
-                    title: '熊猫向前冲',
-                    imageUrl: Laya.Render.canvas.toTempFilePathSync({
-                        destWidth: 500,
-                        destHeight: 400
-                    })
-                };
-            });
-        }
         $game = _this;
         _this.camLayer = new Sprite();
         _this.addChild(_this.camLayer);
@@ -69,6 +55,10 @@ var Game = /** @class */ (function (_super) {
         _this.beginUI.startButton.on(Laya.Event.CLICK, _this, _this.onBeginGame);
         _this.beginUI.rankButton.on(Laya.Event.CLICK, _this, _this.onOpenRank);
         _this.beginUI.shareButton.on(Laya.Event.CLICK, _this, _this.share);
+        //星星广告显示或隐藏
+        if (Laya.Browser.onIOS) {
+            _this.beginUI.starGame.visible = false;
+        }
         _this.gameUI = new ui.GameUI();
         _this.addChild(_this.gameUI);
         _this.gameUI.visible = false;
@@ -77,6 +67,8 @@ var Game = /** @class */ (function (_super) {
         _this.gameOverUI.visible = false;
         _this.gameOverUI.restartButton.on(Laya.Event.CLICK, _this, _this.onRestart);
         _this.player.start(_this);
+        //展现广告
+        $bannerManager.show();
         return _this;
     }
     Object.defineProperty(Game.prototype, "score", {
@@ -268,6 +260,9 @@ var Game = /** @class */ (function (_super) {
         this.player.isRun = true;
         $musicManager.begin();
         this.gameUI.visible = true;
+        //广告关闭
+        $bannerManager.hide();
+        $bannerManager.changeBanner();
     };
     Game.prototype.onDie = function () {
         $musicManager.end();
@@ -279,6 +274,8 @@ var Game = /** @class */ (function (_super) {
         this.gameOverUI.scoreLabel.text = String(this.score);
         //设置分数
         $openView.setScore(this.score);
+        //广告显示
+        $bannerManager.show();
     };
     Game.prototype.onRestart = function () {
         //移除所有物体
@@ -291,6 +288,8 @@ var Game = /** @class */ (function (_super) {
     };
     Game.prototype.onOpenRank = function () {
         $openView.openRank();
+        //打开广告
+        $bannerManager.hide();
     };
     Game.prototype.share = function () {
         if (Laya.Browser.onMiniGame) {

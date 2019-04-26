@@ -119,6 +119,20 @@ var GameMain = /** @class */ (function () {
             var item = new Stab();
             Pool.recover("Stab", item);
         }
+        //初始化一些东西
+        //配置微信分享
+        if (Laya.Browser.onMiniGame) {
+            var wx = Laya.Browser.window.wx;
+            wx.showShareMenu();
+            wx.onShareAppMessage(function () {
+                return {
+                    title: '熊猫向前冲',
+                    imageUrlId: "9Hj6sm0wQiy0Ws6oQR09MQ",
+                    imageUrl: "https://mmocgame.qpic.cn/wechatgame/ARj3tqWnCKe8zPyRsf5vkoQlgkrZCrWpbr0ziaoc2WayoxXeViaia9zhHlYZUtDf3UO/0"
+                };
+            });
+        }
+        $bannerManager.changeBanner();
         //开始游戏
         new Main();
     };

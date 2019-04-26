@@ -73,21 +73,6 @@ class Game extends Sprite {
     //----------初始化---------
     constructor() {
         super()
-        if (Laya.Browser.onMiniGame){
-            //配置微信分享
-            let wx = Laya.Browser.window.wx
-            wx.showShareMenu() 
-            wx.onShareAppMessage(function () {
-                return {
-                    title: '熊猫向前冲',
-                    imageUrl:  Laya.Render.canvas.toTempFilePathSync({
-                        destWidth: 500,
-                        destHeight: 400
-                    })
-                }
-            })
-        }
-        
 
         $game = this
         this.camLayer = new Sprite()
@@ -127,6 +112,10 @@ class Game extends Sprite {
         this.beginUI.startButton.on(Laya.Event.CLICK, this, this.onBeginGame)
         this.beginUI.rankButton.on(Laya.Event.CLICK, this, this.onOpenRank)
         this.beginUI.shareButton.on(Laya.Event.CLICK, this, this.share)
+        //星星广告显示或隐藏
+        if (Laya.Browser.onIOS){
+            this.beginUI.starGame.visible=false
+        }        
 
         this.gameUI = new ui.GameUI()
         this.addChild(this.gameUI)
@@ -139,6 +128,9 @@ class Game extends Sprite {
 
 
         this.player.start(this)
+
+        //展现广告
+        $bannerManager.show()
     }
     start() {
 
@@ -271,6 +263,10 @@ class Game extends Sprite {
         this.player.isRun = true
         $musicManager.begin()
         this.gameUI.visible = true
+
+        //广告关闭
+        $bannerManager.hide()
+        $bannerManager.changeBanner()
     }
     onDie() {
         $musicManager.end()
@@ -282,6 +278,9 @@ class Game extends Sprite {
         this.gameOverUI.scoreLabel.text = String(this.score)
         //设置分数
         $openView.setScore(this.score)
+
+        //广告显示
+        $bannerManager.show()
 
     }
     onRestart() {
@@ -295,6 +294,8 @@ class Game extends Sprite {
     }
     onOpenRank() {
         $openView.openRank()
+        //打开广告
+        $bannerManager.hide()
     }
     share() {
         if (Laya.Browser.onMiniGame){

@@ -54,6 +54,8 @@ var OpenView = /** @class */ (function (_super) {
             return;
         }
         this.tex.bitmap.alwaysChange = false;
+        //打开广告
+        $bannerManager.show();
     };
     return OpenView;
 }(ui.rankViewUI));

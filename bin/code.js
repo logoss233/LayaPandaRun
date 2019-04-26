@@ -50655,6 +50655,46 @@ var GameData = /** @class */ (function () {
     return GameData;
 }());
 //# sourceMappingURL=GameData.js.map
+var BannerManager = /** @class */ (function () {
+    function BannerManager() {
+        this.banner = null;
+    }
+    BannerManager.prototype.changeBanner = function () {
+        if (this.banner) {
+            this.banner.destroy();
+        }
+        // 创建 Banner 广告实例，提前初始化
+        if (Laya.Browser.onMiniGame) {
+            var wx = Laya.Browser.window.wx;
+            var winSize = wx.getSystemInfoSync();
+            var screenWidth = winSize.screenWidth;
+            var screenHeight = winSize.screenHeight;
+            var bannerWidth = 300;
+            var bannerHeight = 100;
+            this.banner = wx.createBannerAd({
+                adUnitId: 'adunit-6ac229ee1b48e7a9',
+                style: {
+                    left: (screenWidth - bannerWidth) / 2,
+                    top: screenHeight - bannerHeight,
+                    width: bannerWidth
+                }
+            });
+        }
+    };
+    BannerManager.prototype.show = function () {
+        if (this.banner) {
+            this.banner.show();
+        }
+    };
+    BannerManager.prototype.hide = function () {
+        if (this.banner) {
+            this.banner.hide();
+        }
+    };
+    return BannerManager;
+}());
+var $bannerManager = new BannerManager();
+//# sourceMappingURL=BannerManager.js.map
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -50685,20 +50725,6 @@ var Game = /** @class */ (function (_super) {
         _this.levelChangeDistance = 1000;
         //------------状态
         _this._state = "";
-        if (Laya.Browser.onMiniGame) {
-            //配置微信分享
-            var wx = Laya.Browser.window.wx;
-            wx.showShareMenu();
-            wx.onShareAppMessage(function () {
-                return {
-                    title: '熊猫向前冲',
-                    imageUrl: Laya.Render.canvas.toTempFilePathSync({
-                        destWidth: 500,
-                        destHeight: 400
-                    })
-                };
-            });
-        }
         $game = _this;
         _this.camLayer = new Sprite();
         _this.addChild(_this.camLayer);
@@ -50726,6 +50752,10 @@ var Game = /** @class */ (function (_super) {
         _this.beginUI.startButton.on(Laya.Event.CLICK, _this, _this.onBeginGame);
         _this.beginUI.rankButton.on(Laya.Event.CLICK, _this, _this.onOpenRank);
         _this.beginUI.shareButton.on(Laya.Event.CLICK, _this, _this.share);
+        //星星广告显示或隐藏
+        if (Laya.Browser.onIOS) {
+            _this.beginUI.starGame.visible = false;
+        }
         _this.gameUI = new ui.GameUI();
         _this.addChild(_this.gameUI);
         _this.gameUI.visible = false;
@@ -50734,6 +50764,8 @@ var Game = /** @class */ (function (_super) {
         _this.gameOverUI.visible = false;
         _this.gameOverUI.restartButton.on(Laya.Event.CLICK, _this, _this.onRestart);
         _this.player.start(_this);
+        //展现广告
+        $bannerManager.show();
         return _this;
     }
     Object.defineProperty(Game.prototype, "score", {
@@ -50925,6 +50957,9 @@ var Game = /** @class */ (function (_super) {
         this.player.isRun = true;
         $musicManager.begin();
         this.gameUI.visible = true;
+        //广告关闭
+        $bannerManager.hide();
+        $bannerManager.changeBanner();
     };
     Game.prototype.onDie = function () {
         $musicManager.end();
@@ -50936,6 +50971,8 @@ var Game = /** @class */ (function (_super) {
         this.gameOverUI.scoreLabel.text = String(this.score);
         //设置分数
         $openView.setScore(this.score);
+        //广告显示
+        $bannerManager.show();
     };
     Game.prototype.onRestart = function () {
         //移除所有物体
@@ -50948,6 +50985,8 @@ var Game = /** @class */ (function (_super) {
     };
     Game.prototype.onOpenRank = function () {
         $openView.openRank();
+        //打开广告
+        $bannerManager.hide();
     };
     Game.prototype.share = function () {
         if (Laya.Browser.onMiniGame) {
@@ -51731,10 +51770,12 @@ var ui;
             return _super.call(this) || this;
         }
         BeginUIUI.prototype.createChildren = function () {
+            View.regComponent("Text", laya.display.Text);
+            View.regComponent("AdvImage", laya.ui.AdvImage);
             _super.prototype.createChildren.call(this);
             this.createView(ui.BeginUIUI.uiView);
         };
-        BeginUIUI.uiView = { "type": "View", "props": { "width": 1136, "height": 640 }, "child": [{ "type": "Button", "props": { "y": 319, "x": 484, "width": 193, "var": "startButton", "stateNum": 1, "skin": "ui/startButton.png", "mouseThrough": false, "mouseEnabled": true, "labelStroke": 0, "labelSize": 40, "height": 185 } }, { "type": "Image", "props": { "y": 83, "x": 356, "skin": "ui/title.png" } }, { "type": "Button", "props": { "y": 552, "x": 946, "width": 231, "var": "rankButton", "stateNum": 1, "skin": "ui/Button.png", "pivotY": 42, "pivotX": 71, "labelSize": 45, "label": "排行榜", "height": 89 } }, { "type": "Button", "props": { "y": 548, "x": 103, "width": 231, "var": "shareButton", "stateNum": 1, "skin": "ui/Button.png", "pivotY": 42, "pivotX": 71, "labelSize": 45, "label": "分享好友", "height": 89 } }] };
+        BeginUIUI.uiView = { "type": "View", "props": { "width": 1136, "height": 640 }, "child": [{ "type": "Button", "props": { "y": 237, "x": 479, "width": 193, "var": "startButton", "stateNum": 1, "skin": "ui/startButton.png", "mouseThrough": false, "mouseEnabled": true, "labelStroke": 0, "labelSize": 40, "height": 185 } }, { "type": "Image", "props": { "y": 83, "x": 356, "skin": "ui/title.png" } }, { "type": "Button", "props": { "y": 552, "x": 946, "width": 231, "var": "rankButton", "stateNum": 1, "skin": "ui/Button.png", "pivotY": 42, "pivotX": 71, "labelSize": 45, "label": "排行榜", "height": 89 } }, { "type": "Button", "props": { "y": 548, "x": 103, "width": 231, "var": "shareButton", "stateNum": 1, "skin": "ui/Button.png", "pivotY": 42, "pivotX": 71, "labelSize": 45, "label": "分享好友", "height": 89 } }, { "type": "Text", "props": { "y": 7, "x": 12, "text": "Powered by LayaAir Engine", "strokeColor": "#ffffff", "stroke": 2, "fontSize": 18, "font": "Arial", "color": "#000000", "bold": true } }, { "type": "Sprite", "props": { "y": 33, "x": 19, "width": 158, "var": "starGame", "height": 144 }, "child": [{ "type": "AdvImage", "props": { "y": 16, "x": 20, "iconSign": "ADSprite" } }] }] };
         return BeginUIUI;
     }(View));
     ui.BeginUIUI = BeginUIUI;
@@ -51766,7 +51807,7 @@ var ui;
             _super.prototype.createChildren.call(this);
             this.createView(ui.GameOverUI.uiView);
         };
-        GameOverUI.uiView = { "type": "View", "props": { "width": 1136, "height": 640 }, "child": [{ "type": "Sprite", "props": { "y": 331, "x": 566, "width": 406, "scaleY": 1, "scaleX": 1, "pivotY": 170, "pivotX": 200, "height": 342 }, "compId": 5, "child": [{ "type": "Image", "props": { "y": -18, "x": -29, "skin": "ui/GameOverPanel.png" } }, { "type": "Text", "props": { "y": 150, "x": 202, "width": 162, "var": "scoreLabel", "text": "1000", "strokeColor": "#2a2a2a", "stroke": 4, "height": 57, "fontSize": 50, "color": "#bb2422", "bold": true } }, { "type": "Button", "props": { "y": 217, "x": 51, "var": "restartButton", "stateNum": 1, "skin": "ui/Button.png", "labelStrokeColor": "#712f2f", "labelStroke": 8, "labelSize": 50, "labelColors": "#bb2422", "labelBold": true, "label": "重    玩" } }] }], "animations": [{ "nodes": [{ "target": 5, "keyframes": { "scaleY": [{ "value": 0, "tweenMethod": "linearNone", "tween": true, "target": 5, "key": "scaleY", "index": 0 }, { "value": 0, "tweenMethod": "linearNone", "tween": true, "target": 5, "key": "scaleY", "index": 10 }, { "value": 1, "tweenMethod": "linearNone", "tween": true, "target": 5, "key": "scaleY", "index": 30 }], "scaleX": [{ "value": 0, "tweenMethod": "linearNone", "tween": true, "target": 5, "key": "scaleX", "index": 0 }, { "value": 0, "tweenMethod": "linearNone", "tween": true, "target": 5, "key": "scaleX", "index": 10 }, { "value": 1, "tweenMethod": "linearNone", "tween": true, "target": 5, "key": "scaleX", "index": 30 }] } }], "name": "ani1", "id": 1, "frameRate": 24, "action": 0 }] };
+        GameOverUI.uiView = { "type": "View", "props": { "width": 1136, "height": 640 }, "child": [{ "type": "Sprite", "props": { "y": 255, "x": 576, "width": 406, "scaleY": 1, "scaleX": 1, "pivotY": 170, "pivotX": 200, "height": 342 }, "compId": 5, "child": [{ "type": "Image", "props": { "y": -18, "x": -29, "skin": "ui/GameOverPanel.png" } }, { "type": "Text", "props": { "y": 150, "x": 202, "width": 162, "var": "scoreLabel", "text": "1000", "strokeColor": "#2a2a2a", "stroke": 4, "height": 57, "fontSize": 50, "color": "#bb2422", "bold": true } }, { "type": "Button", "props": { "y": 217, "x": 51, "var": "restartButton", "stateNum": 1, "skin": "ui/Button.png", "labelStrokeColor": "#712f2f", "labelStroke": 8, "labelSize": 50, "labelColors": "#bb2422", "labelBold": true, "label": "重    玩" } }] }], "animations": [{ "nodes": [{ "target": 5, "keyframes": { "scaleY": [{ "value": 0, "tweenMethod": "linearNone", "tween": true, "target": 5, "key": "scaleY", "index": 0 }, { "value": 0, "tweenMethod": "linearNone", "tween": true, "target": 5, "key": "scaleY", "index": 10 }, { "value": 1, "tweenMethod": "linearNone", "tween": true, "target": 5, "key": "scaleY", "index": 30 }], "scaleX": [{ "value": 0, "tweenMethod": "linearNone", "tween": true, "target": 5, "key": "scaleX", "index": 0 }, { "value": 0, "tweenMethod": "linearNone", "tween": true, "target": 5, "key": "scaleX", "index": 10 }, { "value": 1, "tweenMethod": "linearNone", "tween": true, "target": 5, "key": "scaleX", "index": 30 }] } }], "name": "ani1", "id": 1, "frameRate": 24, "action": 0 }] };
         return GameOverUI;
     }(View));
     ui.GameOverUI = GameOverUI;
@@ -51843,6 +51884,8 @@ var OpenView = /** @class */ (function (_super) {
             return;
         }
         this.tex.bitmap.alwaysChange = false;
+        //打开广告
+        $bannerManager.show();
     };
     return OpenView;
 }(ui.rankViewUI));
@@ -51968,6 +52011,20 @@ var GameMain = /** @class */ (function () {
             var item = new Stab();
             Pool.recover("Stab", item);
         }
+        //初始化一些东西
+        //配置微信分享
+        if (Laya.Browser.onMiniGame) {
+            var wx = Laya.Browser.window.wx;
+            wx.showShareMenu();
+            wx.onShareAppMessage(function () {
+                return {
+                    title: '熊猫向前冲',
+                    imageUrlId: "9Hj6sm0wQiy0Ws6oQR09MQ",
+                    imageUrl: "https://mmocgame.qpic.cn/wechatgame/ARj3tqWnCKe8zPyRsf5vkoQlgkrZCrWpbr0ziaoc2WayoxXeViaia9zhHlYZUtDf3UO/0"
+                };
+            });
+        }
+        $bannerManager.changeBanner();
         //开始游戏
         new Main();
     };
