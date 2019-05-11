@@ -66,6 +66,7 @@ var Game = /** @class */ (function (_super) {
         _this.addChild(_this.gameOverUI);
         _this.gameOverUI.visible = false;
         _this.gameOverUI.restartButton.on(Laya.Event.CLICK, _this, _this.onRestart);
+        _this.gameOverUI.shareButton.on(Laya.Event.CLICK, _this, _this.gameOverShare);
         _this.player.start(_this);
         //展现广告
         $bannerManager.show();
@@ -295,7 +296,19 @@ var Game = /** @class */ (function (_super) {
         if (Laya.Browser.onMiniGame) {
             var wx = Laya.Browser.window.wx;
             wx.shareAppMessage({
-                title: '快来一起跑酷吧'
+                title: '快来一起跑酷吧',
+                imageUrlId: "9Hj6sm0wQiy0Ws6oQR09MQ",
+                imageUrl: "https://mmocgame.qpic.cn/wechatgame/ARj3tqWnCKe8zPyRsf5vkoQlgkrZCrWpbr0ziaoc2WayoxXeViaia9zhHlYZUtDf3UO/0"
+            });
+        }
+    };
+    Game.prototype.gameOverShare = function () {
+        if (Laya.Browser.onMiniGame) {
+            var wx = Laya.Browser.window.wx;
+            wx.shareAppMessage({
+                title: '我获得了' + this.score + "分，快来挑战我吧！",
+                imageUrlId: "9Hj6sm0wQiy0Ws6oQR09MQ",
+                imageUrl: "https://mmocgame.qpic.cn/wechatgame/ARj3tqWnCKe8zPyRsf5vkoQlgkrZCrWpbr0ziaoc2WayoxXeViaia9zhHlYZUtDf3UO/0"
             });
         }
     };
